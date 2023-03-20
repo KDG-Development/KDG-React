@@ -1,0 +1,34 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Types/Flattened" />
+
+## `Flattened<TInput,TOutput>`
+Used to compose a flattened type from a given input to a specified output
+### Example usage
+
+<Source
+  language={'ts'}
+  format
+  code={`
+    type BirthDate = {
+      day:number
+      month:number
+      year:number
+    }
+
+    type UserFormState = {
+      name:string
+      birthDate:BirthDate
+    }
+
+    type UserFormStateErrors = Flattened<UserFormState,string|undefined>
+    
+    // Resulting type for UserFormStateErrors
+    // {
+    //   name?:string
+    //   'birthdate.day'?:string
+    //   'birthdate.month'?:string
+    //   'birthdate.year'?:string
+    // }
+  `}
+/>

@@ -1,0 +1,8 @@
+dist
+node_modules
+
+# local packs created
+pkg
+
+# storybook build
+storybook-static

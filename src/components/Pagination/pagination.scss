@@ -1,0 +1,19 @@
+@import "../../../node_modules/@coreui/coreui/scss/functions";
+@import "../../../node_modules/@coreui/coreui/scss/variables";
+
+.page-changer-wrapper {
+  display: flex;
+  align-items: center;
+  padding: .25rem;
+  white-space: nowrap;
+  border: 1px solid $light;
+  border-radius: 4px;
+  margin-left: 1rem;
+  button {
+      background-color: transparent !important;
+      box-shadow: none !important;
+  }
+  input {
+      max-width: 50px;
+  }
+}

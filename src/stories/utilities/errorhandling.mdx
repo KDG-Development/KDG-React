@@ -1,0 +1,104 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Utilities/ErrorHandling" />
+
+# Error Handling Utilities
+
+## `type TError<T>`
+Used to define an error object for a given object type
+### Example usage
+<Source
+  format
+  language={'ts'}
+  code={`
+    type Person = {
+      name: string
+      age: number
+      hobbies: string[]
+      contactinfo:{
+        phone: string
+        email: string
+      }
+    }
+
+    type PersonError = TError<Person>
+    // resulting type
+    // {
+    //   name?: string
+    //   age?: string
+    //   hobbies?: string
+    //   'contactinfo.phone'?: string
+    //   'contactinfo.email'?: string
+    // }
+  `}
+/>
+
+
+## `tryParseErrors(ErrorParseConfig<T>)`
+Used to parse errors from an HTTP response using provided parse mappings
+
+### Example usage
+
+Consider the following type
+
+<Source
+  format
+  language={'ts'}
+  code={`
+    type PersonError = TError<Person>
+    // resulting type
+    // {
+    //   name?: string
+    //   age?: string
+    //   hobbies?: string
+    //   'contactinfo.phone'?: string
+    //   'contactinfo.email'?: string
+    // }
+  `}
+/>
+
+Perform an API request and try parsing errors from the response
+
+<Source
+  format
+  language={'ts'}
+  code={`
+    // make an api request
+    const data = await getErrorsFromAPI();
+
+    // parsing a direct response
+    const errorParser =
+      // provide a PersonError type here to benefit from IDE parser autocomplete
+      tryParseErrors<PersonError>({
+        response:{
+          // in the event you dont have a response, 'ParsedResponse' should be the case here
+          case:'Response',
+          value:{
+            response:data,
+            parseResponse:x => x.json(), // optionally handle response parsing
+          }
+        },
+        parsers:{
+          // parsers follow this format:
+          // [type property]:[property we are expecting to see from response containing the error]
+          name:'NAME_ERROR',
+          age:'age_invalid',
+        },
+        parseMaps:[
+          // instructions on how to attempt parsing errors from a given response
+          // some API's might return different data structures, so multiple parsers can be provided
+          (body,field) => {
+            // this example assumes the receiving matches our parser exactly
+            bodyParam[field]
+          },
+          (body,field) => {
+            // in this example, we perform some logic in attempt to parse the property error
+            bodyParam
+              .errors
+              .find(x => x.someArbitraryPropertyWeExpect.toLower() === field.toLower())
+              .message
+          },
+        ]
+      })
+  `}
+/>

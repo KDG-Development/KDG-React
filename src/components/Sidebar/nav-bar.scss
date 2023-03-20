@@ -1,0 +1,42 @@
+
+.sidebar-narrow-unfoldable:not(:hover) .custom-nav-title {
+    padding: var(--cui-sidebar-nav-title-padding-y) var(--cui-sidebar-nav-title-padding-x);
+    margin-top: var(--cui-sidebar-nav-title-margin-top);
+    font-size: 80%;
+    font-weight: 700;
+    color: var(--cui-sidebar-nav-title-color);
+    text-transform: uppercase;
+    transition: height .15s, margin .15s;
+}
+
+
+.sidebar-narrow-unfoldable:not(:hover) .custom-nav-title-hr {
+    padding: var(--cui-sidebar-nav-title-padding-y) var(--cui-sidebar-nav-title-padding-x);
+    margin-top: var(--cui-sidebar-nav-title-margin-top);
+    color: var(--cui-sidebar-nav-title-color);
+    font-size: 10%;
+    font-weight: 700;
+    transition: height .15s, margin .15s;
+}
+
+.sidebar-narrow-unfoldable:not(:hover) .custom-nav-title-hr .custom-nav-hr {
+    height: 19.19px;
+}
+
+.sidebar-narrow-unfoldable:not(:hover) .custom-nav-title-hr .custom-nav-hr hr {
+    flex-grow:1;
+}
+
+
+.sidebar-narrow-unfoldable:hover .custom-nav-title {
+    display:none
+}
+.sidebar-narrow-unfoldable:hover .custom-nav-title-hr {
+    display:none
+}
+
+.nav-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

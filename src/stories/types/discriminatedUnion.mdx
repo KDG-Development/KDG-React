@@ -1,0 +1,23 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Types/DiscriminatedUnion" />
+
+## `Union<K extends string, T>`
+Utility type for composing a union case, required for composing a discriminated union
+
+## `DiscriminatedUnion<U extends Union<string, any>[]>`
+Used to compose a discriminated union type. Especially useful when combined with the [DiscriminatedUnionHandler](../?path=/docs/components-discriminatedunionhandler--docs)
+### Example usage:
+<Source
+  format
+  language={'ts'}
+  code={`
+    type TLoaded =
+      DiscriminatedUnion<[
+        Union<'Loading','Loading data...'>,
+        Union<'Loaded', ['cat','dog','monkey']>
+      ]>
+  `}
+/>
+
+
