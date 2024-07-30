@@ -44,14 +44,13 @@ const NumberInput: React.FC<NumberInputProps> = (props) => {
 
   const toMaybeDecimal = (x:number) => x.toFixed(props.allowDecimals ? props.maxDecimals || 2 : 0)
 
-  const parsedPropValue =
+  const [value,setValue] = useState(
     parseValue(
       props.value
         ? toMaybeDecimal(parsedNumberValue(props.value))
         : ''
     )
-
-  const [value,setValue] = useState(parsedPropValue)
+  )
 
   useEffect(() => {
     props.onChange(parsedNumberValue(Number(value) || 0))
@@ -71,12 +70,7 @@ const NumberInput: React.FC<NumberInputProps> = (props) => {
   return (
     <TextInput
       { ...props }
-      value={
-        // if the parsed prop value isnt the same as the state value, default to the prop
-        parseValue(value || '') === props.value
-          ? value
-          : parsedPropValue
-      }
+      value={value}
       onChange={x => setValue(prev => parseValue(x) === null ? prev : handleOnChange(parseValue(x)))}
       helperText={
         props.helperText
