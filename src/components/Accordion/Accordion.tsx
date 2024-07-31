@@ -16,7 +16,7 @@ const Accordion = <T extends {}>(props:AccordionType<T>) => {
         props.items.map(x => (
           <CAccordionItem
             key={props.parseKey(x)}
-            itemKey={props.parseKey(x)}
+            itemKey={props.parseKey(x).toString()}
           >
             <CAccordionHeader>
               {props.parseLabel(x)}

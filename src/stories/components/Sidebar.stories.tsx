@@ -3,6 +3,7 @@ import { cilSpeedometer } from '@coreui/icons-pro'
 import CIcon from '@coreui/icons-react'
 import type { Meta } from '@storybook/react'
 import { Sidebar,SidebarEnums } from '../../components'
+import { StoryDecorators } from '../utils'
 
 
 const Nav = () => (<div>Nav 2</div>)
@@ -12,6 +13,7 @@ const icon = <CIcon icon={cilSpeedometer} />
 export default {
   component: Sidebar,
   title:'Components/Sidebar',
+  decorators:[StoryDecorators.Padding.bottom()],
   args: {
     size:SidebarEnums.SidebarSize.LG,
     active:(_) => 'link1',
