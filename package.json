@@ -46,7 +46,7 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "@coreui/coreui": "^4.2.6",
+    "@coreui/coreui-pro": "^4.6.3",
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-pro": "^2.0.3",
     "@coreui/icons-react": "^2.2.1",
