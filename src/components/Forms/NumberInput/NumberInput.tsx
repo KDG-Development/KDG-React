@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import TextInput, { TextInputProps } from '../TextInput/TextInput'
 import { composedBooleanValidatedString } from '../../../utils/Common';
-import { use } from '@js-joda/core';
 
 export type DecimalConfig = {
   allowDecimals: true;

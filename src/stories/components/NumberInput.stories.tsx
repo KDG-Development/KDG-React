@@ -59,21 +59,3 @@ export const WithMinAndMaxValue = () => {
     />
   )
 }
-
-export const WithProvidedState = () => {
-  const [value,setValue] = React.useState<number|null>(null)
-  return (
-    <>
-      <NumberInput
-        value={ value }
-        onChange={ setValue }
-        allowDecimals
-        min={0}
-        max={100}
-      />
-      <button onClick={() => setValue(null)}>
-        reset
-      </button>
-    </>
-  )
-}
