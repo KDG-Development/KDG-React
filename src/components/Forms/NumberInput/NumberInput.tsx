@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import TextInput, { TextInputProps } from '../TextInput/TextInput'
 import { composedBooleanValidatedString } from '../../../utils/Common';
+import { use } from '@js-joda/core';
 
 export type DecimalConfig = {
   allowDecimals: true;
@@ -55,6 +56,12 @@ const NumberInput: React.FC<NumberInputProps> = (props) => {
   useEffect(() => {
     props.onChange(parsedNumberValue(Number(value) || 0))
   },[value,parsedNumberValue])
+
+  useEffect(() => {
+    if (props.value !== Number(value)){
+      setValue(props.value ? parseValue(toMaybeDecimal(props.value)) : '')
+    }
+  },[props.value])
 
   const handleOnChange = (x:string|null) => {
     const numVal = Number(x) || 0
