@@ -20,6 +20,7 @@ export type TextInputProps = {
   delay?:number
   autofocus?:boolean
   inputRef?:React.RefObject<HTMLInputElement>
+  inputRefTabIndex?:number
   hideDefaultHelperText?:boolean
   helperText?:React.ReactNode
   required?:boolean
@@ -61,7 +62,10 @@ const TextInput = (props:TextInputProps) => {
         render={
           (icon) => (
             <CInputGroup>
-              <CInputGroupText className={ icon.className }>
+              <CInputGroupText
+                className={ icon.className }
+                tabIndex={props.inputRefTabIndex}
+              >
                 { icon.content }
               </CInputGroupText>
               { input }

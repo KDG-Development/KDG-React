@@ -37,6 +37,7 @@ type SelectConfig<T> = DiscriminatedUnion<[
 
 type BaseAsyncSelectProps<T> = {
   options:T[]
+  onFocus?:()=>void
   onSearch:(_:string|null)=>void
   parseKey:(_:T)=>React.Key
   renderSelectedOption?:(_:T) => React.ReactNode
@@ -63,6 +64,7 @@ const BaseSelect = <T extends {}>(
   const container = useRef<HTMLDivElement>(null)
   const inputWrapper = useRef<HTMLInputElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const optionsRef = useRef<HTMLDivElement>(null)
   const loadRef = useRef<HTMLDivElement>(null)
   const [showInput,setShowInput] = useState(false)
 
@@ -93,7 +95,7 @@ const BaseSelect = <T extends {}>(
   }, [loadRef, props, showInput]);
 
 
-  // focus the input wrapper when clicking inside the input wrapper
+  // focus the input wrapper when clicking or focusing inside the input wrapper
   useEffect(() => {
     const handleClick = () => {
       if (!props.disabled) {
@@ -106,16 +108,18 @@ const BaseSelect = <T extends {}>(
 
     if (inputWrapper.current) {
       inputWrapper.current.addEventListener('click', handleClick);
+      inputWrapper.current.addEventListener('focus', handleClick);
     }
 
     return () => {
       if (inputWrapper.current) {
         inputWrapper.current.removeEventListener('click', handleClick);
+        inputWrapper.current.removeEventListener('focus', handleClick);
       }
     };
   }, [inputWrapper,props.disabled]);
 
-  // hide the results wrapper when the user clicks outside the select
+  // hide the results wrapper when the user clicks or focuses outside the select
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (container.current && !container.current.contains(event.target as Node)) {
@@ -130,12 +134,94 @@ const BaseSelect = <T extends {}>(
       }
     };
 
+    const handleFocusOutside = (event:FocusEvent) => {
+      if (container.current && !container.current.contains(event.target as Node)) {
+        // if there are no options available, reset the search to repopulate the options
+        if (showInput && !props.loading) {
+          props.onSearch(null)
+        }
+        setShowInput(false)
+        if (inputWrapper.current){
+          inputWrapper.current.classList.remove('focus')
+        }
+      }
+    }
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('focusout', handleFocusOutside);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('focusout', handleFocusOutside);
     };
   }, [container,props.options,props.loading]);
+
+
+  const handleSelect = (x:T) => {
+    handleDiscriminatedUnion({
+      value: props.config,
+      config: {
+        [ESelectConfig.Single]: config => {
+          config.value.onChange(x)
+          setShowInput(false)
+        },
+        [ESelectConfig.Multi]: config => {
+          config.value.onChange(
+            config.value.value.find(v => props.parseKey(v) === props.parseKey(x))
+              ? config.value.value.filter(v => props.parseKey(v) !== props.parseKey(x))
+              : config.value.value.concat(x)
+          )
+        },
+      }
+    })
+  }
+
+  const [tentativeOptionIndex,setTentativeOptionIndex] = useState(-1)
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+
+      const up = 'ArrowUp'
+      const down = 'ArrowDown'
+      const enter = 'Enter'
+
+      const lookupOption = props.options[tentativeOptionIndex]
+
+      if (optionsRef.current && optionsRef.current.offsetParent !== null) {
+        if ([up, down].includes(event.code)) {
+          event.preventDefault()
+          setTentativeOptionIndex(prev => {
+            const newIndex = (prev + (event.code === up ? -1 : 1))
+            return Math.max(-1, Math.min(newIndex, props.options.length - 1))
+          })
+        } else if (event.code === enter && tentativeOptionIndex >= -1) {
+          lookupOption && handleSelect(lookupOption)
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [optionsRef, props.options.length, tentativeOptionIndex, handleSelect])
+
+  useEffect(() => {
+    if (optionsRef.current && tentativeOptionIndex >= 0) {
+      const optionElements = optionsRef.current.children
+      if (optionElements[tentativeOptionIndex]) {
+        optionElements[tentativeOptionIndex].scrollIntoView({
+          block: 'nearest',
+          inline: 'nearest'
+        })
+      }
+    }
+  }, [tentativeOptionIndex])
+
+  useEffect(() => {
+    if (!showInput) setTentativeOptionIndex(-1)
+  },[showInput])
 
   const handleRemove = (x:T) => {
     handleDiscriminatedUnion({
@@ -158,27 +244,11 @@ const BaseSelect = <T extends {}>(
     }
   }
 
-  const handleSelect = (x:T) => {
-    handleDiscriminatedUnion({
-      value:props.config,
-      config:{
-        [ESelectConfig.Single]:config => {
-          config.value.onChange(x)
-          setShowInput(false)
-        },
-        [ESelectConfig.Multi]:config => {
-          config.value.onChange(
-            config.value.value.find(v => props.parseKey(v) === props.parseKey(x))
-            ? config.value.value.filter(v => props.parseKey(v) !== props.parseKey(x))
-            : config.value.value.concat(x)
-          )
-          if (inputRef.current) {
-            inputRef.current.focus()
-          }
-        },
-      }
-    })
-  }
+  useEffect(() => {
+    if (props.config.case === ESelectConfig.Multi && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [props.config.case === ESelectConfig.Multi ? props.config.value.value : null])
 
   const renderSelectedOption = (x:T) =>
     <EntityConditional
@@ -249,6 +319,7 @@ const BaseSelect = <T extends {}>(
             ['bg-light',!!props.disabled],
             ['is-invalid',!!props.error]
           ])}
+          tabIndex={0}
           ref={inputWrapper}
         >
           <DiscriminatedUnionHandler
@@ -283,7 +354,9 @@ const BaseSelect = <T extends {}>(
                             onDelay={props.onSearch}
                             placeholder={props.placeholder || 'Begin typing...'}
                             autoFocus
+                            onFocus={props.onFocus}
                             inputRef={inputRef}
+                            inputRefTabIndex={-1}
                             disabled={props.disabled}
                           />
                         )}
@@ -307,6 +380,7 @@ const BaseSelect = <T extends {}>(
                           placeholder={props.placeholder || 'Begin typing...'}
                           autoFocus
                           inputRef={inputRef}
+                          inputRefTabIndex={-1}
                         />
                       )}
                       onFalse={() => inputTrigger}
@@ -320,9 +394,13 @@ const BaseSelect = <T extends {}>(
         <Conditional
           condition={showInput}
           onTrue={() => (
-            <div className={`results-wrapper form-control ${!!props.direction ? props.direction : ''}`}>
+            <div
+              className={`results-wrapper form-control ${!!props.direction ? props.direction : ''}`}
+              tabIndex={-1}
+              ref={optionsRef}
+            >
               {props.options
-                .map(x => (
+                .map((x,i) => (
                   <Clickable
                     key={props.parseKey(x)}
                     onClick={() => handleSelect(x)}
@@ -334,13 +412,18 @@ const BaseSelect = <T extends {}>(
                           [ESelectConfig.Single]:v => (
                             composedBooleanValidatedString([
                               ['result d-flex',true],
-                              ['bg-light',v.value.value
+                              ['bg-light',tentativeOptionIndex < 0 && v.value.value
                                 ? props.parseKey(v.value.value) === props.parseKey(x)
                                 : false
-                              ]
+                              ],
+                              ['bg-light', i == tentativeOptionIndex]
                             ])
                           ),
-                          [ESelectConfig.Multi]:() => 'result d-flex',
+                          [ESelectConfig.Multi]:() =>
+                            composedBooleanValidatedString([
+                              ['result d-flex',true],
+                              ['bg-light', i == tentativeOptionIndex]
+                            ]),
                         }
                       })
                     }>

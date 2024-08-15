@@ -7,11 +7,13 @@ type SharedProps = {
   delay:number
   disabled?:boolean
   inputRef?:React.RefObject<HTMLInputElement>
+  inputRefTabIndex?:number
   placeholder?:string
   label?: string;
   className?: string;
   error?: string;
   autoFocus?:boolean
+  onFocus?:()=>void
   required?:boolean
 }
 
@@ -86,6 +88,7 @@ export const DelayedTextInput = (props:TextProps) => {
       error={props.error}
       autofocus={props.autoFocus}
       inputRef={props.inputRef}
+      inputRefTabIndex={props.inputRefTabIndex}
       required={props.required}
     />
   )
@@ -165,6 +168,7 @@ export const DelayedNumberInput = (props:NumberProps) => {
       error={props.error}
       autofocus={props.autoFocus}
       inputRef={props.inputRef}
+      inputRefTabIndex={props.inputRefTabIndex}
       required={props.required}
       min={props.min}
       max={props.max}
