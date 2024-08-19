@@ -65,6 +65,7 @@ const BaseSelect = <T extends {}>(
   const inputWrapper = useRef<HTMLInputElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const optionsRef = useRef<HTMLDivElement>(null)
+  const singleSelectedRef = useRef<HTMLSpanElement>(null)
   const loadRef = useRef<HTMLDivElement>(null)
   const [showInput,setShowInput] = useState(false)
 
@@ -195,6 +196,49 @@ const BaseSelect = <T extends {}>(
     setTentativeOptionIndex(0)
   }, [props.options])
 
+  // focus the input ref when the prop value changes from a value to null
+  useEffect(() => {
+    handleDiscriminatedUnion({
+      value: props.config,
+      config: {
+        [ESelectConfig.Single]: config => {
+          if (config.value.value === null && inputRef.current) {
+            inputRef.current.focus()
+            setShowInput(true)
+          }
+        },
+        [ESelectConfig.Multi]: () => {} // No action needed for multi-select
+      }
+    })
+  }, [inputRef, props.config, setShowInput])
+
+  // if the singleSelectedRef is focused and the user presses any alphanumeric key, enter, backspace, or delete, perform a console log
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (singleSelectedRef.current === document.activeElement) {
+        if (
+          event.key === 'Backspace' ||
+          event.key === 'Delete'
+        ) {
+          event.preventDefault()
+          handleDiscriminatedUnion({
+            value:props.config,
+            config:{
+              Multi:() => {}, // shouldnt ever get here
+              Single:x => x.value.onChange(null),
+            }
+          })
+        }
+      }
+    }
+
+    singleSelectedRef.current?.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      singleSelectedRef.current?.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [props.config,singleSelectedRef])
+
   const handleRemove = (x:T) => {
     handleDiscriminatedUnion({
       value:props.config,
@@ -221,7 +265,11 @@ const BaseSelect = <T extends {}>(
       key={props.parseKey(x)}
       entity={ props.renderSelectedOption }
       render={ (v) => (
-        <span className='m-1 selected-overflow-wrapper'>
+        <span
+          className='m-1 selected-overflow-wrapper'
+          tabIndex={0}
+          ref={singleSelectedRef}
+        >
           {v(x)}
         </span>
       ) }
