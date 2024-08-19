@@ -95,67 +95,30 @@ const BaseSelect = <T extends {}>(
   }, [loadRef, props, showInput]);
 
 
-  // focus the input wrapper when clicking or focusing inside the input wrapper
   useEffect(() => {
-    const handleClick = () => {
-      if (!props.disabled) {
+    const handleFocusIn = (event: FocusEvent) => {
+      if (inputRef.current?.contains(event.target as Node)) {
         setShowInput(true)
-        if (inputWrapper.current){
-          inputWrapper.current.classList.add('focus')
-        }
-      }
-    };
-
-    if (inputWrapper.current) {
-      inputWrapper.current.addEventListener('click', handleClick);
-      inputWrapper.current.addEventListener('focus', handleClick);
-    }
-
-    return () => {
-      if (inputWrapper.current) {
-        inputWrapper.current.removeEventListener('click', handleClick);
-        inputWrapper.current.removeEventListener('focus', handleClick);
-      }
-    };
-  }, [inputWrapper,props.disabled]);
-
-  // hide the results wrapper when the user clicks or focuses outside the select
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (container.current && !container.current.contains(event.target as Node)) {
-        // if there are no options available, reset the search to repopulate the options
-        if (showInput && !props.loading) {
-          props.onSearch(null)
-        }
-        setShowInput(false)
-        if (inputWrapper.current){
-          inputWrapper.current.classList.remove('focus')
-        }
-      }
-    };
-
-    const handleFocusOutside = (event:FocusEvent) => {
-      if (container.current && !container.current.contains(event.target as Node)) {
-        // if there are no options available, reset the search to repopulate the options
-        if (showInput && !props.loading) {
-          props.onSearch(null)
-        }
-        setShowInput(false)
-        if (inputWrapper.current){
-          inputWrapper.current.classList.remove('focus')
-        }
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('focusout', handleFocusOutside);
+    const handleFocusOut = () => {
+      // this settimout is because the previously focused element is still focused when the focusout event fires
+      setTimeout(() => {
+        if (container.current && !container.current.contains(document.activeElement)) {
+          setShowInput(false)
+        }
+      }, 0)
+    }
+
+    document.addEventListener('focusin', handleFocusIn)
+    document.addEventListener('focusout', handleFocusOut)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('focusout', handleFocusOutside);
-    };
-  }, [container,props.options,props.loading]);
-
+      document.removeEventListener('focusin', handleFocusIn)
+      document.removeEventListener('focusout', handleFocusOut)
+    }
+  }, [inputRef, container])
 
   const handleSelect = (x:T) => {
     handleDiscriminatedUnion({
@@ -176,7 +139,7 @@ const BaseSelect = <T extends {}>(
     })
   }
 
-  const [tentativeOptionIndex,setTentativeOptionIndex] = useState(-1)
+  const [tentativeOptionIndex,setTentativeOptionIndex] = useState(0)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -192,7 +155,7 @@ const BaseSelect = <T extends {}>(
           event.preventDefault()
           setTentativeOptionIndex(prev => {
             const newIndex = (prev + (event.code === up ? -1 : 1))
-            return Math.max(-1, Math.min(newIndex, props.options.length - 1))
+            return Math.max(0, Math.min(newIndex, props.options.length - 1))
           })
         } else if (event.code === enter && tentativeOptionIndex >= -1) {
           lookupOption && handleSelect(lookupOption)
@@ -219,9 +182,18 @@ const BaseSelect = <T extends {}>(
     }
   }, [tentativeOptionIndex])
 
+
+  // cleanup when showinput is set to false
   useEffect(() => {
-    if (!showInput) setTentativeOptionIndex(-1)
+    if (!showInput) {
+      setTentativeOptionIndex(0)
+    }
   },[showInput])
+
+  // reset the tentative option index when the options change
+  useEffect(() => {
+    setTentativeOptionIndex(0)
+  }, [props.options])
 
   const handleRemove = (x:T) => {
     handleDiscriminatedUnion({
@@ -243,12 +215,6 @@ const BaseSelect = <T extends {}>(
       inputRef.current.focus()
     }
   }
-
-  useEffect(() => {
-    if (props.config.case === ESelectConfig.Multi && inputRef.current) {
-      inputRef.current.focus()
-    }
-  }, [props.config.case === ESelectConfig.Multi ? props.config.value.value : null])
 
   const renderSelectedOption = (x:T) =>
     <EntityConditional
@@ -281,20 +247,6 @@ const BaseSelect = <T extends {}>(
       }
     />
 
-  const inputTrigger =
-    <span
-      className={
-        composedBooleanValidatedString([
-          ['form-control text-muted',true],
-          ['bg-light',!!props.disabled]
-        ])
-      }
-      style={{whiteSpace:'nowrap'}}
-    >
-      {props.placeholder || 'Begin typing...'}
-    </span>
-
-
   return (
     <div className={`kdg-select-${props.config.case.toLowerCase()}`}>
       <EntityConditional
@@ -319,7 +271,6 @@ const BaseSelect = <T extends {}>(
             ['bg-light',!!props.disabled],
             ['is-invalid',!!props.error]
           ])}
-          tabIndex={0}
           ref={inputWrapper}
         >
           <DiscriminatedUnionHandler
@@ -345,22 +296,14 @@ const BaseSelect = <T extends {}>(
                   )}
                   fallback={() => (
                     <div className="typeable-area">
-                      <Conditional
-                        condition={showInput}
-                        onTrue={() => (
-                          <DelayedTextInput
-                            delay={props.delayMS || 300}
-                            minSearchLength={props.minSearchLength}
-                            onDelay={props.onSearch}
-                            placeholder={props.placeholder || 'Begin typing...'}
-                            autoFocus
-                            onFocus={props.onFocus}
-                            inputRef={inputRef}
-                            inputRefTabIndex={-1}
-                            disabled={props.disabled}
-                          />
-                        )}
-                        onFalse={() => inputTrigger}
+                      <DelayedTextInput
+                        delay={props.delayMS || 300}
+                        minSearchLength={props.minSearchLength}
+                        onDelay={props.onSearch}
+                        placeholder={props.placeholder || 'Begin typing...'}
+                        autoFocus
+                        inputRef={inputRef}
+                        resetOnblur
                       />
                     </div>
                   )}
@@ -368,22 +311,16 @@ const BaseSelect = <T extends {}>(
               ),
               [ESelectConfig.Multi]:config => (
                 <>
-                {config.value.value.map(renderSelectedOption)}
+                  {config.value.value.map(renderSelectedOption)}
                   <div className="typeable-area">
-                    <Conditional
-                      condition={showInput}
-                      onTrue={() => (
-                        <DelayedTextInput
-                          delay={props.delayMS || 300}
-                          minSearchLength={props.minSearchLength}
-                          onDelay={props.onSearch}
-                          placeholder={props.placeholder || 'Begin typing...'}
-                          autoFocus
-                          inputRef={inputRef}
-                          inputRefTabIndex={-1}
-                        />
-                      )}
-                      onFalse={() => inputTrigger}
+                    <DelayedTextInput
+                      delay={props.delayMS || 300}
+                      minSearchLength={props.minSearchLength}
+                      onDelay={props.onSearch}
+                      placeholder={props.placeholder || 'Begin typing...'}
+                      autoFocus
+                      inputRef={inputRef}
+                      resetOnblur
                     />
                   </div>
                 </>
@@ -447,6 +384,7 @@ const BaseSelect = <T extends {}>(
                                   }
                                 })
                               }
+                              tabIndex={-1}
                             />
                           )
                         }}

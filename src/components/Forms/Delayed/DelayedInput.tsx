@@ -7,13 +7,14 @@ type SharedProps = {
   delay:number
   disabled?:boolean
   inputRef?:React.RefObject<HTMLInputElement>
-  inputRefTabIndex?:number
   placeholder?:string
   label?: string;
   className?: string;
   error?: string;
   autoFocus?:boolean
   onFocus?:()=>void
+  onBlur?:()=>void
+  resetOnblur?:true
   required?:boolean
 }
 
@@ -77,6 +78,11 @@ export const DelayedTextInput = (props:TextProps) => {
     setvalue(value)
   }
 
+  const handleBlur = () => {
+    props.onBlur && props.onBlur()
+    if (props.resetOnblur) setvalue(null)
+  }
+
   return (
     <TextInput
       value={value}
@@ -88,8 +94,9 @@ export const DelayedTextInput = (props:TextProps) => {
       error={props.error}
       autofocus={props.autoFocus}
       inputRef={props.inputRef}
-      inputRefTabIndex={props.inputRefTabIndex}
       required={props.required}
+      onBlur={handleBlur}
+      onFocus={props.onFocus}
     />
   )
 }
@@ -153,6 +160,11 @@ export const DelayedNumberInput = (props:NumberProps) => {
     setvalue(value)
   }
 
+  const handleBlur = () => {
+    props.onBlur && props.onBlur()
+    if (props.resetOnblur) setvalue(null)
+  }
+
   return (
     <NumberInput
       {...{
@@ -168,12 +180,13 @@ export const DelayedNumberInput = (props:NumberProps) => {
       error={props.error}
       autofocus={props.autoFocus}
       inputRef={props.inputRef}
-      inputRefTabIndex={props.inputRefTabIndex}
       required={props.required}
       min={props.min}
       max={props.max}
       helperText={props.helperText}
       hideDefaultHelperText={props.hideDefaultHelperText}
+      onBlur={handleBlur}
+      onFocus={props.onFocus}
     />
   )
 }

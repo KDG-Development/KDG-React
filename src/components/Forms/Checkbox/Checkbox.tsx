@@ -10,6 +10,7 @@ type Props = {
   error?:string
   required?:boolean
   disabled?:boolean
+  tabIndex?:number
 }
 
 const Checkbox = (props:Props) => {
@@ -35,6 +36,7 @@ const Checkbox = (props:Props) => {
         onChange={() => props.onChange(!props.value)}
         invalid={!!props.error}
         feedback={props.error}
+        tabIndex={props.tabIndex}
       />
     </CFormControlWrapper>
   )

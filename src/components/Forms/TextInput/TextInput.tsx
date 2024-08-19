@@ -8,6 +8,7 @@ export type TextInputProps = {
   onChange:(_:string)=>void
   label?:string
   disabled?:boolean
+  onFocus?:()=>void
   onBlur?:()=>void
   placeholder?:string
   className?:string
@@ -20,7 +21,6 @@ export type TextInputProps = {
   delay?:number
   autofocus?:boolean
   inputRef?:React.RefObject<HTMLInputElement>
-  inputRefTabIndex?:number
   hideDefaultHelperText?:boolean
   helperText?:React.ReactNode
   required?:boolean
@@ -32,6 +32,7 @@ const TextInput = (props:TextInputProps) => {
       value={props.value || ''}
       disabled={ props.disabled }
       onChange={ e => props.onChange(e.target.value) }
+      onFocus={props.onFocus}
       onBlur={ !!props.onBlur ? (() => props.onBlur!()) : undefined }
       placeholder={ props.placeholder }
       className={props.className}
@@ -64,7 +65,6 @@ const TextInput = (props:TextInputProps) => {
             <CInputGroup>
               <CInputGroupText
                 className={ icon.className }
-                tabIndex={props.inputRefTabIndex}
               >
                 { icon.content }
               </CInputGroupText>
