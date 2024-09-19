@@ -68,6 +68,7 @@ const BaseSelect = <T extends {}>(
   const singleSelectedRef = useRef<HTMLSpanElement>(null)
   const loadRef = useRef<HTMLDivElement>(null)
   const [showInput,setShowInput] = useState(false)
+  const prevValue = useRef(props.config.value.value)
 
   // load more observer
   useEffect(() => {
@@ -202,7 +203,7 @@ const BaseSelect = <T extends {}>(
       value: props.config,
       config: {
         [ESelectConfig.Single]: config => {
-          if (config.value.value === null && inputRef.current) {
+          if (config.value.value === null && prevValue.current != null && inputRef.current) {
             inputRef.current.focus()
             setShowInput(true)
           }
@@ -349,7 +350,6 @@ const BaseSelect = <T extends {}>(
                         minSearchLength={props.minSearchLength}
                         onDelay={props.onSearch}
                         placeholder={props.placeholder || 'Begin typing...'}
-                        autoFocus
                         inputRef={inputRef}
                         resetOnblur
                       />
@@ -366,7 +366,6 @@ const BaseSelect = <T extends {}>(
                       minSearchLength={props.minSearchLength}
                       onDelay={props.onSearch}
                       placeholder={props.placeholder || 'Begin typing...'}
-                      autoFocus
                       inputRef={inputRef}
                       resetOnblur
                     />
