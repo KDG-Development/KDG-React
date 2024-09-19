@@ -145,6 +145,66 @@ export const putRequest = async <T extends {}>(params:PostRequestParams<T>) => {
     }
 }
 
+export const postRequestWithReturn = async <T extends {}>(
+  params: Omit<PostRequestParams<T>, 'success'>
+):Promise<T> => {
+  return new Promise((resolve,reject) => {
+    postRequest({
+      ...params,
+      success: resolve,
+      errorHandler: (response: Response) => {
+        if (params.errorHandler) params.errorHandler(response)
+        reject(response)
+      },
+    })
+  })
+}
+
+export const getRequestWithReturn = async <T extends {}>(
+  params: Omit<GetRequestParams<T>, 'success'>
+):Promise<T> => {
+  return new Promise((resolve,reject) => {
+    getRequest({
+      ...params,
+      success: resolve,
+      errorHandler: (response: Response) => {
+        if (params.errorHandler) params.errorHandler(response)
+        reject(response)
+      },
+    })
+  })
+}
+
+export const deleteRequestWithReturn = async <T extends {}>(
+  params: Omit<GetRequestParams<T>, 'success'>
+):Promise<T> => {
+  return new Promise((resolve,reject) => {
+    deleteRequest({
+      ...params,
+      success: resolve,
+      errorHandler: (response: Response) => {
+        if (params.errorHandler) params.errorHandler(response)
+        reject(response)
+      },
+    })
+  })
+}
+
+export const putRequestWithReturn = async <T extends {}>(
+  params: Omit<PostRequestParams<T>, 'success'>
+):Promise<T> => {
+  return new Promise((resolve,reject) => {
+    putRequest({
+      ...params,
+      success: resolve,
+      errorHandler: (response: Response) => {
+        if (params.errorHandler) params.errorHandler(response)
+        reject(response)
+      },
+    })
+  })
+}
+
 const composedFormData = (obj: {[key: string]: any}) => {
   const formData = new FormData();
   Object.keys(obj).forEach(key => {

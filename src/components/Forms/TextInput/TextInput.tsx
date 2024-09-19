@@ -8,6 +8,7 @@ export type TextInputProps = {
   onChange:(_:string)=>void
   label?:string
   disabled?:boolean
+  onFocus?:()=>void
   onBlur?:()=>void
   placeholder?:string
   className?:string
@@ -31,6 +32,7 @@ const TextInput = (props:TextInputProps) => {
       value={props.value || ''}
       disabled={ props.disabled }
       onChange={ e => props.onChange(e.target.value) }
+      onFocus={props.onFocus}
       onBlur={ !!props.onBlur ? (() => props.onBlur!()) : undefined }
       placeholder={ props.placeholder }
       className={props.className}
@@ -61,7 +63,9 @@ const TextInput = (props:TextInputProps) => {
         render={
           (icon) => (
             <CInputGroup>
-              <CInputGroupText className={ icon.className }>
+              <CInputGroupText
+                className={ icon.className }
+              >
                 { icon.content }
               </CInputGroupText>
               { input }
