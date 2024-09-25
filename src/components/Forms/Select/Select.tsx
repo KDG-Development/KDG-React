@@ -98,11 +98,15 @@ const BaseSelect = <T extends {}>(
 
 
   useEffect(() => {
+
     const handleFocusIn = (event: FocusEvent) => {
-      if (inputRef.current?.contains(event.target as Node)) {
-        setShowInput(true)
+      // Check if the focused element is either inside the inputRef or the containerRef
+      if (inputRef.current?.contains(event.target as Node)
+          || container.current?.contains(event.target as Node)) {
+        setShowInput(true);
       }
-    }
+    };
+    
 
     const handleFocusOut = () => {
       // this settimout is because the previously focused element is still focused when the focusout event fires
