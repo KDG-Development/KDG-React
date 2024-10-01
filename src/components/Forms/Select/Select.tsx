@@ -145,7 +145,7 @@ const BaseSelect = <T extends {}>(
     })
   }
 
-  const [tentativeOptionIndex,setTentativeOptionIndex] = useState(0)
+  const [tentativeOptionIndex,setTentativeOptionIndex] = useState(-1)
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -153,6 +153,7 @@ const BaseSelect = <T extends {}>(
       const up = 'ArrowUp'
       const down = 'ArrowDown'
       const enter = 'Enter'
+      const tab = 'Tab'
 
       const lookupOption = props.options[tentativeOptionIndex]
 
@@ -161,9 +162,9 @@ const BaseSelect = <T extends {}>(
           event.preventDefault()
           setTentativeOptionIndex(prev => {
             const newIndex = (prev + (event.code === up ? -1 : 1))
-            return Math.max(0, Math.min(newIndex, props.options.length - 1))
+            return Math.max(-1, Math.min(newIndex, props.options.length - 1))
           })
-        } else if (event.code === enter && tentativeOptionIndex >= -1) {
+        } else if ([enter,tab].includes(event.code) && tentativeOptionIndex >= -1) {
           lookupOption && handleSelect(lookupOption)
         }
       }
@@ -192,13 +193,13 @@ const BaseSelect = <T extends {}>(
   // cleanup when showinput is set to false
   useEffect(() => {
     if (!showInput) {
-      setTentativeOptionIndex(0)
+      setTentativeOptionIndex(-1)
     }
   },[showInput])
 
   // reset the tentative option index when the options change
   useEffect(() => {
-    setTentativeOptionIndex(0)
+    setTentativeOptionIndex(-1)
   }, [props.options])
 
   // focus the input ref when the prop value changes from a value to null
@@ -400,11 +401,13 @@ const BaseSelect = <T extends {}>(
                           [ESelectConfig.Single]:v => (
                             composedBooleanValidatedString([
                               ['result d-flex',true],
-                              ['bg-light',tentativeOptionIndex < 0 && v.value.value
-                                ? props.parseKey(v.value.value) === props.parseKey(x)
-                                : false
+                              ['bg-light', i == tentativeOptionIndex],
+                              [
+                                'bg-primary bg-opacity-10',
+                                tentativeOptionIndex < 0 && v.value.value
+                                  ? props.parseKey(v.value.value) === props.parseKey(x)
+                                  : false
                               ],
-                              ['bg-light', i == tentativeOptionIndex]
                             ])
                           ),
                           [ESelectConfig.Multi]:() =>
