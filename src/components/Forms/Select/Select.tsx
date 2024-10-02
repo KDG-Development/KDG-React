@@ -403,8 +403,8 @@ const BaseSelect = <T extends {}>(
                               ['result d-flex',true],
                               ['bg-light', i == tentativeOptionIndex],
                               [
-                                'bg-primary bg-opacity-10',
-                                tentativeOptionIndex < 0 && v.value.value
+                                'text-primary',
+                                v.value.value
                                   ? props.parseKey(v.value.value) === props.parseKey(x)
                                   : false
                               ],
