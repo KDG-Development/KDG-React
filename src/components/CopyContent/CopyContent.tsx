@@ -19,7 +19,7 @@ export const CopyContent = (props:React.PropsWithChildren<TCopyContentProps>) =>
 
   return (
     <>
-      {props.content}
+      {props.children}
       <Conditional
         condition={copied}
         onTrue={() => <Icon icon={x => x.cilCheck} />}

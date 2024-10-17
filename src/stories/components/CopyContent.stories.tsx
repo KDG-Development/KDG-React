@@ -34,3 +34,8 @@ export const DifferentCopyText: Story = {
     </CopyContent>
   )
 }
+export const NoCopyText: Story = {
+  render: () => (
+    <CopyContent content="Hidden copy text" className="custom-class"/>
+  )
+}
