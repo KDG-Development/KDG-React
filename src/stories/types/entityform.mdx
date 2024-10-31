@@ -1,0 +1,29 @@
+import { Meta, Source } from '@storybook/blocks'
+
+<Meta title="Types/EntityForm" />
+
+## `TEntityForm<T>`
+A utility type that transforms an entity type `T` into a form-compatible version where all non-boolean and non-array properties can be null.
+
+### Example usage:
+<Source
+  format
+  language={'ts'}
+  code={`
+    type TPerson = {
+      name: string
+      age: number 
+      isActive: boolean
+      hobbies: string[]
+    }
+
+    type TPersonForm = TEntityForm<TPerson>
+    // Results in:
+    // {
+    //   name: string | null
+    //   age: number | null
+    //   isActive: boolean    // Boolean remains unchanged
+    //   hobbies: string[]    // Array remains unchanged
+    // }
+  `}
+/>
