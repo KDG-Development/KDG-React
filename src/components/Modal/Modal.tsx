@@ -33,6 +33,7 @@ export const Modal = (props:Props) => {
       ['modal-sm', props.size === 'sm'],
       ['modal-lg', props.size === 'lg'],
       ['modal-xl', props.size === 'xl'],
+      [`${props.className || ''}`,!!props.className]
     ])
 
   return (
