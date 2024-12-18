@@ -35,6 +35,30 @@ export const Single = () => {
   )
 
 }
+export const SingleWithAddNew = () => {
+
+  const [value,setValue] = useState<TOpt|null>(null)
+
+  const handleAddNew = (newValue:string) => {
+    const id = Ipsum.uuid()
+    setValue({
+      id,
+      name:newValue
+    })
+  }
+
+  return (
+    <Select
+      value={value}
+      options={_options}
+      parseKey={x=>x.id}
+      onChange={setValue}
+      parseOptionLabel={x=>x.name}
+      onAddNew={handleAddNew}
+    />
+  )
+
+}
 
 export const Multi = () => {
 
@@ -47,6 +71,30 @@ export const Multi = () => {
       parseKey={x=>x.id}
       onChange={setValue}
       parseOptionLabel={x=>x.name}
+    />
+  )
+
+}
+export const MultiWithAddNew = () => {
+
+  const [value,setValue] = useState<TOpt[]>([])
+
+  const handleAddNew = (newValue:string) => {
+    const id = Ipsum.uuid()
+    setValue([...value,{
+      id,
+      name:newValue
+    }])
+  }
+
+  return (
+    <MultiSelect
+      value={value}
+      options={_options}
+      parseKey={x=>x.id}
+      onChange={setValue}
+      parseOptionLabel={x=>x.name}
+      onAddNew={handleAddNew}
     />
   )
 

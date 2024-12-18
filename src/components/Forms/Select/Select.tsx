@@ -53,6 +53,7 @@ type BaseAsyncSelectProps<T> = {
   minSearchLength?:number
   delayMS?:number
   direction?:Direction
+  onAddNew?:(_:string) => void
 }
 
 const BaseSelect = <T extends {}>(
@@ -69,6 +70,8 @@ const BaseSelect = <T extends {}>(
   const loadRef = useRef<HTMLDivElement>(null)
   const [showInput,setShowInput] = useState(false)
   const prevValue = useRef(props.config.value.value)
+
+  const ADD_NEW_OPTION_KEY = (value:string) => 'add-new' + value
 
   // load more observer
   useEffect(() => {
@@ -155,17 +158,29 @@ const BaseSelect = <T extends {}>(
       const enter = 'Enter'
       const tab = 'Tab'
 
-      const lookupOption = props.options[tentativeOptionIndex]
+      const lookupOption = props.options[
+        tentativeOptionIndex + (
+          props.onAddNew && !!inputRef.current?.value
+            ? -1
+            : 0
+        )
+      ]
 
       if (optionsRef.current && optionsRef.current.offsetParent !== null) {
         if ([up, down].includes(event.code)) {
           event.preventDefault()
           setTentativeOptionIndex(prev => {
             const newIndex = (prev + (event.code === up ? -1 : 1))
-            return Math.max(-1, Math.min(newIndex, props.options.length - 1))
+            return Math.max(-1, Math.min(newIndex, props.options.length))
           })
         } else if ([enter,tab].includes(event.code) && tentativeOptionIndex >= -1) {
-          lookupOption && handleSelect(lookupOption)
+          if (tentativeOptionIndex === 0 && props.onAddNew && inputRef.current?.value) {
+            props.onAddNew(inputRef.current.value)
+            return
+          } else {
+            console.log('lookupOption',lookupOption)
+            lookupOption && handleSelect(lookupOption)
+          }
         }
       }
     }
@@ -301,6 +316,64 @@ const BaseSelect = <T extends {}>(
       }
     />
 
+  const renderedActionLabel = (
+    parsedKey:React.Key,
+    parsedOptionLabel:string,
+    index:number
+  ) => (
+    <div className={
+      handleDiscriminatedUnion({
+        value:props.config,
+        config:{
+          [ESelectConfig.Single]:v => (
+            composedBooleanValidatedString([
+              ['result d-flex',true],
+              ['bg-light', index == tentativeOptionIndex],
+              [
+                'text-primary',
+                v.value.value
+                  ? props.parseKey(v.value.value) === parsedKey
+                  : false
+              ],
+            ])
+          ),
+          [ESelectConfig.Multi]:() =>
+            composedBooleanValidatedString([
+              ['result d-flex',true],
+              ['bg-light', index == tentativeOptionIndex]
+            ]),
+        }
+      })
+    }>
+      <DiscriminatedUnionHandler
+        value={props.config}
+        config={{
+          [ESelectConfig.Single]:() => null,
+          [ESelectConfig.Multi]:() => (
+            <Checkbox
+              onChange={() => {}}
+              value={
+                handleDiscriminatedUnion({
+                  value:props.config,
+                  config:{
+                    [ESelectConfig.Single]:c =>
+                      c.value.value
+                        ? props.parseKey(c.value.value) == parsedKey
+                        : false,
+                    [ESelectConfig.Multi]:c =>
+                      !!c.value.value.find(v => props.parseKey(v) === parsedKey),
+                  }
+                })
+              }
+              tabIndex={-1}
+            />
+          )
+        }}
+      />
+      {parsedOptionLabel}
+    </div>
+  )
+
   return (
     <div className={`kdg-select-${props.config.case.toLowerCase()}`}>
       <EntityConditional
@@ -388,63 +461,37 @@ const BaseSelect = <T extends {}>(
               tabIndex={-1}
               ref={optionsRef}
             >
+              <EntityConditional
+                entity={props.onAddNew}
+                render={onAddNew => (
+                  <EntityConditional
+                    entity={inputRef.current?.value}
+                    render={value => (
+                      <Clickable
+                        onClick={() => onAddNew(value)}
+                        className='text-muted'
+                      >
+                        {renderedActionLabel(
+                          ADD_NEW_OPTION_KEY(value),
+                          `+ ${value}`,
+                          0
+                        )}
+                      </Clickable>  
+                    )}
+                  />
+                )}
+              />
               {props.options
                 .map((x,i) => (
                   <Clickable
                     key={props.parseKey(x)}
                     onClick={() => handleSelect(x)}
                   >
-                    <div className={
-                      handleDiscriminatedUnion({
-                        value:props.config,
-                        config:{
-                          [ESelectConfig.Single]:v => (
-                            composedBooleanValidatedString([
-                              ['result d-flex',true],
-                              ['bg-light', i == tentativeOptionIndex],
-                              [
-                                'text-primary',
-                                v.value.value
-                                  ? props.parseKey(v.value.value) === props.parseKey(x)
-                                  : false
-                              ],
-                            ])
-                          ),
-                          [ESelectConfig.Multi]:() =>
-                            composedBooleanValidatedString([
-                              ['result d-flex',true],
-                              ['bg-light', i == tentativeOptionIndex]
-                            ]),
-                        }
-                      })
-                    }>
-                      <DiscriminatedUnionHandler
-                        value={props.config}
-                        config={{
-                          [ESelectConfig.Single]:() => null,
-                          [ESelectConfig.Multi]:() => (
-                            <Checkbox
-                              onChange={() => {}}
-                              value={
-                                handleDiscriminatedUnion({
-                                  value:props.config,
-                                  config:{
-                                    [ESelectConfig.Single]:c =>
-                                      c.value.value
-                                        ? props.parseKey(c.value.value) == props.parseKey(x)
-                                        : false,
-                                    [ESelectConfig.Multi]:c =>
-                                      !!c.value.value.find(v => props.parseKey(v) === props.parseKey(x)),
-                                  }
-                                })
-                              }
-                              tabIndex={-1}
-                            />
-                          )
-                        }}
-                      />
-                      {props.parseOptionLabel(x)}
-                    </div>
+                    {renderedActionLabel(
+                      props.parseKey(x),
+                      props.parseOptionLabel(x),
+                      props.onAddNew && !!inputRef.current?.value ? i+1 : i
+                    )}
                   </Clickable>
                 ))
               }
