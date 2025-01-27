@@ -12,6 +12,7 @@ type Props = {
   required?:boolean
   error?:string
   disabled?:boolean
+  placeholder?:string
 }
 const Textarea = (props:Props) => {
   return (
@@ -37,6 +38,7 @@ const Textarea = (props:Props) => {
         invalid={!!props.error}
         feedback={props.error}
         disabled={props.disabled}
+        placeholder={props.placeholder}
       />
     </CFormControlWrapper>
   )

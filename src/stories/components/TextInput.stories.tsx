@@ -3,7 +3,7 @@ import React from 'react'
 import { cilSpeedometer } from '@coreui/icons-pro'
 import CIcon from '@coreui/icons-react'
 import type { Meta } from '@storybook/react'
-import { TextInput } from '../../components'
+import TextInput from '../../components/Forms/TextInput'
 
 const icon = <CIcon icon={cilSpeedometer} />
 
