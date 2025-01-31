@@ -54,6 +54,7 @@ type BaseAsyncSelectProps<T> = {
   delayMS?:number
   direction?:Direction
   onAddNew?:(_:string) => void
+  optionRenderer?:(x:T,i:number) => React.ReactNode
 }
 
 const BaseSelect = <T extends {}>(
@@ -174,11 +175,10 @@ const BaseSelect = <T extends {}>(
             return Math.max(-1, Math.min(newIndex, props.options.length))
           })
         } else if ([enter,tab].includes(event.code) && tentativeOptionIndex >= -1) {
-          if (tentativeOptionIndex === 0 && props.onAddNew && inputRef.current?.value) {
+          if (tentativeOptionIndex === -1 && props.onAddNew && inputRef.current?.value) {
             props.onAddNew(inputRef.current.value)
             return
           } else {
-            console.log('lookupOption',lookupOption)
             lookupOption && handleSelect(lookupOption)
           }
         }
@@ -487,11 +487,18 @@ const BaseSelect = <T extends {}>(
                     key={props.parseKey(x)}
                     onClick={() => handleSelect(x)}
                   >
-                    {renderedActionLabel(
-                      props.parseKey(x),
-                      props.parseOptionLabel(x),
-                      props.onAddNew && !!inputRef.current?.value ? i+1 : i
-                    )}
+                    <EntityConditional 
+                      entity={props.optionRenderer}
+                      render={renderer => renderer(x,i)}
+                      fallback={() => 
+                        renderedActionLabel(
+                          props.parseKey(x),
+                          props.parseOptionLabel(x),
+                          props.onAddNew && !!inputRef.current?.value ? i+1 : i
+                        )
+                      }
+
+                    />
                   </Clickable>
                 ))
               }
