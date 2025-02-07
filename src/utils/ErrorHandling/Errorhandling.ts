@@ -32,7 +32,7 @@ export const tryParseErrors = async <T extends {}>(args:ErrorParseConfig<T>) => 
   try {
 
     const parsed =
-      handleDiscriminatedUnion({
+      await handleDiscriminatedUnion({
         value:args.response,
         config:{
           Response:async x =>
