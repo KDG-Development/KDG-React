@@ -4,7 +4,7 @@ import { Conditional } from '../Conditional'
 
 type Tab = {
   id:React.Key
-  label:string
+  label:React.ReactNode
   content:() => React.ReactNode
 }
 
