@@ -54,7 +54,7 @@ export const Pagination = (props:TPaginationProps) => {
             condition={props.pagination.page > 1}
             onTrue={() => (
               <Icon
-                icon={x => x.cilCaretLeft}
+                icon={'cilCaretLeft'}
                 onClick={ () =>
                   props.onChange({
                     ...props.pagination,
@@ -81,7 +81,7 @@ export const Pagination = (props:TPaginationProps) => {
             condition={props.totalRecords / props.pagination.numberOfItemsPerPage > props.pagination.page}
             onTrue={() => (
               <Icon
-                icon={x => x.cilCaretRight}
+                icon={'cilCaretRight'}
                 onClick={ () =>
                   props.onChange({
                     ...props.pagination,

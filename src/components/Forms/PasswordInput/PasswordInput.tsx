@@ -12,7 +12,7 @@ export const PasswordInput = (props:TextInputProps) => {
       {...props}
       icon={{
         content:
-          <Icon icon={x => show ? x.cilLockUnlocked : x.cilLockLocked} onClick={() => setShow(prev => !prev)} />
+          <Icon icon={show ? 'cilLockUnlocked' : 'cilLockLocked'} onClick={() => setShow(prev => !prev)} />
       }}
       type={!show ? 'password' : undefined}
     />

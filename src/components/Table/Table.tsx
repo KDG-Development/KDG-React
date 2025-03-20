@@ -194,10 +194,10 @@ export const Table = <T extends {}>(props:TableProps<T>) => {
                           <Conditional
                             condition={exp.expandedRecords.includes(props.itemKey(item))}
                             onTrue={() => (
-                              <Icon icon={x => x.cilMinus} />
+                              <Icon icon={'cilMinus'} />
                             )}
                             onFalse={() => (
-                              <Icon icon={x => x.cilPlus} />
+                              <Icon icon={'cilPlus'} />
                             )}
                           />
                         </Clickable>

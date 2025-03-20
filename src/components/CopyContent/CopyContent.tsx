@@ -22,10 +22,10 @@ export const CopyContent = (props:React.PropsWithChildren<TCopyContentProps>) =>
       {props.children}
       <Conditional
         condition={copied}
-        onTrue={() => <Icon icon={x => x.cilCheck} />}
+        onTrue={() => <Icon icon={'cilCheck'} />}
         onFalse={() =>
           <Clickable onClick={handleCopy} className={props.className}>
-            <Icon icon={x => x.cilCopy} />
+            <Icon icon={'cilCopy'} />
           </Clickable>
         }
       />

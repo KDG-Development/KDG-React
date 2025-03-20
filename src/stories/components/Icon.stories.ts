@@ -6,7 +6,7 @@ export default {
   component: Icon,
   title:'Components/Icon',
   args:{
-    icon:x => x.cibAirbnb,
+    icon:'cibAirbnb',
     onClick:() => console.log('asdf'),
     title:'Some title'
   }
