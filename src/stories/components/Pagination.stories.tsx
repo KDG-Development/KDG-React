@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import type { Meta } from '@storybook/react';
-import { Pagination } from '../../components';
+import { Pagination } from '../../components/Pagination/Pagination';
 import { StoryDecorators } from '../utils';
 import { TPagination } from '../../utils';
 

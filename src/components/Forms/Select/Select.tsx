@@ -16,6 +16,7 @@ import { RequiredAsterisk } from '../_common'
 import Checkbox from '../Checkbox'
 import { Direction } from '../../../types'
 
+
 enum ESelectConfig {
   Single='Single',
   Multi='Multi',

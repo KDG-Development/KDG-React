@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { cilCaretLeft, cilCaretRight } from '@coreui/icons'
 import './pagination.scss'
 
 import { TPagination } from "../../utils/Hooks/hooks"
@@ -54,12 +54,11 @@ export const Pagination = (props:TPaginationProps) => {
             condition={props.pagination.page > 1}
             onTrue={() => (
               <Icon
-                icon={'cilCaretLeft'}
-                onClick={ () =>
-                  props.onChange({
-                    ...props.pagination,
-                    page:props.pagination.page - 1
-                  }) }
+                icon={cilCaretLeft}
+                onClick={() => props.onChange({
+                  ...props.pagination,
+                  page:props.pagination.page - 1
+                })}
               />
             )}
           />
@@ -81,12 +80,11 @@ export const Pagination = (props:TPaginationProps) => {
             condition={props.totalRecords / props.pagination.numberOfItemsPerPage > props.pagination.page}
             onTrue={() => (
               <Icon
-                icon={'cilCaretRight'}
-                onClick={ () =>
-                  props.onChange({
-                    ...props.pagination,
-                    page:props.pagination.page + 1
-                  }) }
+                icon={cilCaretRight}
+                onClick={() => props.onChange({
+                  ...props.pagination,
+                  page:props.pagination.page + 1
+                })}
               />
             )}
           />

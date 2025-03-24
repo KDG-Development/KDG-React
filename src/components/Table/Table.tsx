@@ -7,6 +7,8 @@ import { Pagination, TPageOptions } from "../Pagination"
 import Loader from "../Loader"
 import Icon from "../Icon"
 import { composedBooleanValidatedString, handleOnClick } from "../../utils/Common/common"
+import { cilMinus } from "@coreui/icons"
+import { cilPlus } from "@coreui/icons"
 
 export enum SortOrder {
   ASC='ASC',
@@ -194,10 +196,10 @@ export const Table = <T extends {}>(props:TableProps<T>) => {
                           <Conditional
                             condition={exp.expandedRecords.includes(props.itemKey(item))}
                             onTrue={() => (
-                              <Icon icon={'cilMinus'} />
+                              <Icon icon={cilMinus} />
                             )}
                             onFalse={() => (
-                              <Icon icon={'cilPlus'} />
+                              <Icon icon={cilPlus} />
                             )}
                           />
                         </Clickable>

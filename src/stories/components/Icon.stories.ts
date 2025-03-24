@@ -1,12 +1,13 @@
 import type { Meta } from '@storybook/react';
-import { Icon } from '../../components';
+import Icon from '../../components/Icon/Icon';
+import { cibAirbnb } from '@coreui/icons';
 
 
 export default {
   component: Icon,
   title:'Components/Icon',
   args:{
-    icon:'cibAirbnb',
+    icon:cibAirbnb,
     onClick:() => console.log('asdf'),
     title:'Some title'
   }
