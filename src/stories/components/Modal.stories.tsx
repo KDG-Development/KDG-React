@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import type { Meta } from '@storybook/react';
-import { ActionButton, Conditional, Modal } from '../../components';
 import { Ipsum } from '.././utils';
+import { Modal } from '../../components';
+import { Conditional } from '../../components';
+import { ActionButton } from '../../components';
 
 export default {
   component: Modal,

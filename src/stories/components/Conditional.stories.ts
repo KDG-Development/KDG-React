@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { Conditional } from '../../components';
+import {Conditional} from '../../components';
 
 export default {
   component: Conditional,

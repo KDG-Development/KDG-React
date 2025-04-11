@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { ProgressBar } from '../../components';
+import {ProgressBar} from '../../components';
 import { Enums } from '../../utils';
 
 

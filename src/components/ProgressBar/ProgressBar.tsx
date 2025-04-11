@@ -13,7 +13,7 @@ type Props = {
     animated?:boolean
   }
 }
-const ProgressBar = (props:Props) =>
+export const ProgressBar = (props:Props) =>
   <CProgress
     height={props.height}
     color={props.color}
@@ -22,5 +22,3 @@ const ProgressBar = (props:Props) =>
     variant={props.striped?.striped ? 'striped' : undefined}
     animated={props.striped?.animated}
   >{props.label}</CProgress>
-
-export default ProgressBar

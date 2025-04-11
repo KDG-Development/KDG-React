@@ -1,4 +1,1 @@
-export {
-  ButtonGroupSingleSelect,
-  ButtonGroupMultiSelect,
-} from './ButtonGroupSelect'
+export * from './ButtonGroupSelect'

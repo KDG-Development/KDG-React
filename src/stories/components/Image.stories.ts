@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Image } from '../../components';
 import logo from '.././assets/kdg-logo.png'
 import { Ipsum } from '.././utils';
+import { Image } from '../../components';
 
 export default {
   component: Image,

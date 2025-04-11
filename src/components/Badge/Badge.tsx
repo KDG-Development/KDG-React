@@ -6,7 +6,7 @@ type Props = {
   color?:Enums.Color
   className?:string
 }
-const Badge = (props:React.PropsWithChildren<Props>) => {
+export const Badge = (props:React.PropsWithChildren<Props>) => {
   return (
     <CBadge
       color={props.color || 'primary'}
@@ -16,5 +16,3 @@ const Badge = (props:React.PropsWithChildren<Props>) => {
     </CBadge>
   )
 }
-
-export default Badge

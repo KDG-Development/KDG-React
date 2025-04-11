@@ -1,8 +1,9 @@
 import React from 'react'
 import type { Meta } from '@storybook/react';
-import { ActionButton, DiscriminatedUnionHandler, handleDiscriminatedUnion } from '../../components';
 import { DiscriminatedUnion, Union } from '../../types';
 import { Ipsum } from '../utils';
+import { DiscriminatedUnionHandler, handleDiscriminatedUnion } from '../../components';
+import { ActionButton } from '../../components';
 
 export default {
   component: DiscriminatedUnionHandler,

@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { DelayedNumberInput } from '../../components';
+import {DelayedNumberInput} from '../../components';
 
 export default {
   component: DelayedNumberInput,

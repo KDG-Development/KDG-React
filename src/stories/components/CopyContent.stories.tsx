@@ -1,6 +1,6 @@
 import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
-import { CopyContent } from '../../components/CopyContent/CopyContent'
+import { CopyContent } from '../../components'
 
 const meta: Meta<typeof CopyContent> = {
   title: 'Components/CopyContent',

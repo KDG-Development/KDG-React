@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { ImageCarousel } from '../../components';
+import {ImageCarousel} from '../../components';
 import logo from '.././assets/kdg-logo.png'
 
 export default {

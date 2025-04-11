@@ -1,1 +1,1 @@
-export { default } from './ElementWithDropdown'
+export * from './ElementWithDropdown'

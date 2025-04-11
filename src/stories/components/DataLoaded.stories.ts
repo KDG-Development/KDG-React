@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { DataLoaded } from '../../components';
+import {DataLoaded} from '../../components';
 
 export default {
   component: DataLoaded,

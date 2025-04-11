@@ -5,7 +5,7 @@ import './pagination.scss'
 import { TPagination } from "../../utils/Hooks/hooks"
 import { Col, Row } from '../../layout'
 import { Select } from '../Forms/Select'
-import Icon from '../Icon'
+import {Icon} from '../Icon/Icon'
 import { Conditional } from '../Conditional'
 import { DelayedNumberInput } from '../Forms'
 import { Direction } from '../../types'

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import type { Meta } from '@storybook/react'
-import { FileInput } from '../../components'
-
+import {FileInput} from '../../components';
 export default {
   component: FileInput,
   title:'Components/Forms/FileInput',

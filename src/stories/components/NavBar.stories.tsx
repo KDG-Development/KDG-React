@@ -2,8 +2,8 @@ import React from 'react'
 import { cilSpeedometer } from '@coreui/icons-pro'
 import CIcon from '@coreui/icons-react'
 import type { Meta } from '@storybook/react';
-import { Image, NavBar } from '../../components';
 import logo from '.././assets/kdg-logo.png'
+import {NavBar, Image} from '../../components';
 
 const icon = <CIcon height={ 25 } customClassName="nav-icon" icon={cilSpeedometer} />
 

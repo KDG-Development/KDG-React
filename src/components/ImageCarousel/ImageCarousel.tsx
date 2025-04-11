@@ -1,6 +1,6 @@
 import React from 'react'
 import { CCarousel, CCarouselItem } from "@coreui/react-pro"
-import Image from "../Image/Image"
+import { Image } from "../Image/Image"
 
 type ImageCarouselProps = {
   images:string[]
@@ -12,7 +12,7 @@ type ImageCarouselProps = {
   imageClassName?:string
   imageWrapperClassName?:string
 }
-const ImageCarousel = (props:ImageCarouselProps) => {
+export const ImageCarousel = (props:ImageCarouselProps) => {
   return (
     <CCarousel
       controls={props.controls}
@@ -37,5 +37,3 @@ const ImageCarousel = (props:ImageCarouselProps) => {
     </CCarousel>
   )
 }
-
-export default ImageCarousel

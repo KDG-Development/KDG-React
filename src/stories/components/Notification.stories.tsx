@@ -1,10 +1,10 @@
 import type { Meta } from '@storybook/react';
 
-import { NotificationProvider } from '../../components/Notification';
+import { NotificationProvider } from '../../components';
 import React from 'react';
 import { Enums, useNotification } from '../../utils';
-import { ActionButton } from '../../components';
 import { Ipsum } from '../utils';
+import { ActionButton } from '../../components';
 
 export default {
   component: NotificationProvider,

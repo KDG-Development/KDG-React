@@ -1,1 +1,1 @@
-export { Conditional,EntityConditional } from './Conditional'
+export * from './Conditional'

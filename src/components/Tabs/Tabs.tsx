@@ -15,7 +15,7 @@ type Props = {
   innerClass?:string
 }
 
-const Tabs = (props:Props) => {
+export const Tabs = (props:Props) => {
 
   const [activeTab, setactiveTab] = useState(!!props.tabs.length ? props.tabs[0].id : null)
 
@@ -64,5 +64,3 @@ const Tabs = (props:Props) => {
   </>
   )
 }
-
-export default Tabs

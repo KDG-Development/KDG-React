@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta } from '@storybook/react';
-import { ElementWithDropdown } from '../../components';
 import { StoryDecorators } from '.././utils';
+import {ElementWithDropdown} from '../../components';
 
 export default {
   component: ElementWithDropdown,

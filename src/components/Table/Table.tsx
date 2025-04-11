@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { CTable, CTableBody, CTableDataCell, CTableHead, CTableHeaderCell, CTableRow } from "@coreui/react-pro"
 import { Conditional, EntityConditional } from "../Conditional/Conditional"
-import Clickable from "../Clickable/Clickable"
+import {Clickable} from "../Clickable/Clickable"
 import { TPagination } from "../../utils/Hooks/hooks"
 import { Pagination, TPageOptions } from "../Pagination"
-import Loader from "../Loader"
-import Icon from "../Icon"
+import { Loader } from "../Loader/Loader"
+import { Icon } from "../Icon/Icon"
 import { composedBooleanValidatedString, handleOnClick } from "../../utils/Common/common"
 import { cilMinus } from "@coreui/icons"
 import { cilPlus } from "@coreui/icons"
@@ -21,6 +21,7 @@ type Sort<T> = {
 type Fields<T> = {
   [header:string]:{
     valueRender:(_:T) => React.ReactNode
+    getCellClassName?:(val:T,index:number)=>string
     hideHeader?:true
     sort?:Sort<T>
     header?:{
@@ -210,7 +211,9 @@ export const Table = <T extends {}>(props:TableProps<T>) => {
                     Object.values(props.fields).map((field,i) =>
                       <CTableDataCell
                         key={`${props.itemKey(item)}-${i}`}
-                        className={'table-max-width'}
+                        className={'table-max-width ' + (
+                          field.getCellClassName ? field.getCellClassName(item,i) : ''
+                        )}
                       >
                         { field.valueRender(item) }
                       </CTableDataCell>

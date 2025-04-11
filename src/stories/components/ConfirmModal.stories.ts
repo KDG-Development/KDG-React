@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { ConfirmModal } from '../../components';
+import {ConfirmModal} from '../../components';
 import { Ipsum } from '.././utils';
 
 export default {

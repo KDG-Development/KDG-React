@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { Ipsum } from '../utils';
-import { List } from '../../components';
+import {List} from '../../components';
 
 
 export default {

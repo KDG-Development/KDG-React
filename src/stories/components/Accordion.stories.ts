@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import Accordion from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components';
 import { Ipsum } from '../utils';
 
 

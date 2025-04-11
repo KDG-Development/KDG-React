@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import Icon from '../../components/Icon/Icon';
+import { Icon } from '../../components';
 import { cibAirbnb } from '@coreui/icons';
 
 

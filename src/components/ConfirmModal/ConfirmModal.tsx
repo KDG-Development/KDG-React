@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import Clickable from "../Clickable/Clickable"
+import { Clickable } from "../Clickable/Clickable"
 import { Conditional } from "../Conditional/Conditional"
 import { Modal } from "../Modal/Modal"
 
@@ -9,7 +9,7 @@ type Props = {
   header?:React.ReactNode
 }
 
-const ConfirmModal = (props:Props) => {
+export const ConfirmModal = (props:Props) => {
   const [show, setshow] = useState(false)
   return (
     <>
@@ -31,5 +31,3 @@ const ConfirmModal = (props:Props) => {
     </>
   )
 }
-
-export default ConfirmModal

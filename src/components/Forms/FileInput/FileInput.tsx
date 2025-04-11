@@ -5,7 +5,7 @@ import { handleDiscriminatedUnion } from '../../DiscriminatedUnionhandler'
 import { MimeType } from 'file-type'
 import { Conditional, EntityConditional } from '../../Conditional'
 import { RequiredAsterisk } from '../_common'
-import { Clickable } from '../../..'
+import {Clickable} from '../../../components'
 
 type MultipleConfig = {
   value: File[]

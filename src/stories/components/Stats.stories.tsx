@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { Stats } from '../../components';
+import {Stats} from '../../components';
 
 export default {
   component: Stats,

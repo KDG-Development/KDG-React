@@ -2,7 +2,7 @@ import React from 'react'
 import { Enums } from '../../utils'
 import { CButton, CLoadingButton } from '@coreui/react-pro'
 import { handleOnClick } from '../../utils/Common/common'
-import Clickable from '../Clickable/Clickable'
+import {Clickable} from '../Clickable/Clickable'
 
 type ActionButtonProps = {
   onClick:()=>void

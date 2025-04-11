@@ -1,4 +1,1 @@
-export {
-  DelayedNumberInput,
-  DelayedTextInput,
-} from './DelayedInput'
+export * from './DelayedInput'

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useRef} from 'react'
-import TextInput from "../TextInput/TextInput"
-import NumberInput from '../NumberInput'
+import { TextInput } from "../TextInput/TextInput"
+import { NumberInput } from '../NumberInput/NumberInput'
 import { DecimalConfig, NumberInputProps } from '../NumberInput/NumberInput'
 
 type SharedProps = {

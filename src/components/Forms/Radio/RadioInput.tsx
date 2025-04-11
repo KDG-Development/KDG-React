@@ -13,7 +13,7 @@ type Props = {
   disabled?:boolean
 }
 
-const Radio = (props:Props) => {
+export const Radio = (props:Props) => {
   return (
     <CFormControlWrapper>
       <CFormCheck
@@ -48,5 +48,3 @@ const Radio = (props:Props) => {
     </CFormControlWrapper>
   )
 }
-
-export default Radio
