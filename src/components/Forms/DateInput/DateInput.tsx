@@ -17,7 +17,7 @@ type Props = {
   error?:string
 }
 
-const DateInput = (props:Props) => {
+export const DateInput = (props:Props) => {
   return (
     <CFormControlWrapper>
       <EntityConditional
@@ -47,5 +47,3 @@ const DateInput = (props:Props) => {
     </CFormControlWrapper>
   )
 }
-
-export default DateInput

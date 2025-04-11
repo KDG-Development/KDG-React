@@ -12,7 +12,7 @@ type Props = {
   disabled?:boolean
 }
 
-const Toggle = (props:Props) => {
+export const Toggle = (props:Props) => {
   return (
     <CFormControlWrapper>
       <div className={'form-check form-switch ' + (props.error ? 'is-invalid' : '')}>
@@ -45,5 +45,3 @@ const Toggle = (props:Props) => {
     </CFormControlWrapper>
   )
 }
-
-export default Toggle

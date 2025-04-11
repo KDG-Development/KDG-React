@@ -3,10 +3,10 @@ import { INotification } from "../../types/Notifications"
 import { useEffect,useCallback } from 'react'
 import store, { useAppDispatch, useAppSelector } from "../../store/store"
 import { clearNotifications, removeNotification } from "../../store/notifications"
-import Alert from "../Alert/Alert"
+import {Alert} from "../Alert/Alert"
 import { Provider } from "react-redux"
-import { Conditional } from "../Conditional"
-import { ActionButton } from "../Buttons"
+import { Conditional } from "../Conditional/Conditional"
+import { ActionButton } from "../Buttons/Buttons"
 
 type NotificationProps = {
   notification:INotification

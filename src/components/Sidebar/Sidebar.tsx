@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from 'react'
 
 import { CSidebar,CSidebarNav,CSidebarBrand,CNavItem,CSidebarToggler,CNavGroup } from '@coreui/react-pro'
 
-import NavTitle from './NavTitle'
+import {NavTitle} from './NavTitle'
 
 export namespace SidebarEnums {
   export enum SidebarSize {

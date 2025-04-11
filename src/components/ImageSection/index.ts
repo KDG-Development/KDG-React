@@ -1,1 +1,1 @@
-export { default } from './ImageSection'
+export * from './ImageSection'

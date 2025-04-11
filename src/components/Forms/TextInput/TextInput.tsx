@@ -26,7 +26,7 @@ export type TextInputProps = {
   required?:boolean
 }
 
-const TextInput = (props:TextInputProps) => {
+export const TextInput = (props:TextInputProps) => {
   const input =
     <CFormInput
       value={props.value || ''}
@@ -77,5 +77,3 @@ const TextInput = (props:TextInputProps) => {
     </CFormControlWrapper>
   )
 }
-
-export default TextInput

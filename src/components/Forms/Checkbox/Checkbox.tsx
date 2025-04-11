@@ -13,7 +13,7 @@ type Props = {
   tabIndex?:number
 }
 
-const Checkbox = (props:Props) => {
+export const Checkbox = (props:Props) => {
   return (
     <CFormControlWrapper>
       <div className={'form-check ' + (props.error ? 'is-invalid' : '')}>
@@ -47,5 +47,3 @@ const Checkbox = (props:Props) => {
     </CFormControlWrapper>
   )
 }
-
-export default Checkbox

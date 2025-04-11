@@ -1,6 +1,6 @@
 import type { Meta } from '@storybook/react';
 import { Ipsum } from '../utils';
-import { Alert } from '../../components';
+import {Alert} from '../../components';
 import { Enums } from '../../utils';
 
 

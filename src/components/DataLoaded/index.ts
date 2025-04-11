@@ -1,1 +1,1 @@
-export { default } from './DataLoaded'
+export * from './DataLoaded'

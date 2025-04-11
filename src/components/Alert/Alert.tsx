@@ -14,7 +14,7 @@ type AlertProps = {
   onDismiss?:() => void
 }
 
-const Alert = (props:AlertProps) => {
+export const Alert = (props:AlertProps) => {
   return (
     <CAlert
       className={props.className}
@@ -36,5 +36,3 @@ const Alert = (props:AlertProps) => {
     </CAlert>
   )
 }
-
-export default Alert

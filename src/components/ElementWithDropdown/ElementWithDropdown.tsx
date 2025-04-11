@@ -7,7 +7,7 @@ type Props = {
   content:()=>React.ReactElement
 }
 
-const ElementWithDropdown = (props:Props) => {
+export const ElementWithDropdown = (props:Props) => {
 
   const [expanded, setExpanded] = useState(false)
 
@@ -42,5 +42,3 @@ const ElementWithDropdown = (props:Props) => {
     </div>
   )
 }
-
-export default ElementWithDropdown

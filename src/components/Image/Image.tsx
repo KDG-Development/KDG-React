@@ -29,7 +29,7 @@ type ImageContentProps = BaseImageProps & {
     inset?:boolean
   }
 }
-const Image = (props:ImageContentProps) => {
+export const Image = (props:ImageContentProps) => {
 
   // TODO: normalize this pattern if we ever use it again!!
   const wrapperClasses = () =>
@@ -111,5 +111,3 @@ const Image = (props:ImageContentProps) => {
     </div>
   )
 }
-
-export default Image

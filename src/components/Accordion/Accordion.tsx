@@ -7,7 +7,7 @@ type AccordionType<T> = {
   parseLabel:(_:T) => string
   parseContent:(_:T) => React.ReactNode
 }
-const Accordion = <T extends {}>(props:AccordionType<T>) => {
+export const Accordion = <T extends {}>(props:AccordionType<T>) => {
   return (
     <CAccordion
       flush
@@ -30,5 +30,3 @@ const Accordion = <T extends {}>(props:AccordionType<T>) => {
     </CAccordion>
   )
 }
-
-export default Accordion

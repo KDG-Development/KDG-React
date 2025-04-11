@@ -1,8 +1,12 @@
 import React from 'react';
 import type { Meta } from '@storybook/react';
-import { ActionButton, Badge, DataLoaded, SortOrder, Table } from '../../components';
 import { Ipsum } from '../utils';
 import { Enums } from '../../utils';
+import { SortOrder } from '../../components';
+import {Table} from '../../components';
+import { ActionButton } from '../../components';
+import { Badge } from '../../components';
+import { DataLoaded } from '../../components';
 
 export default {
   component: Table,

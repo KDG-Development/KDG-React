@@ -15,7 +15,7 @@ type CardProps = {
     content:React.ReactNode
   }
 }
-const Card = (props:CardProps) => {
+export const Card = (props:CardProps) => {
   return (
     <CCard className={ props.className }>
       <EntityConditional
@@ -44,4 +44,3 @@ const Card = (props:CardProps) => {
     </CCard>
   )
 }
-export default Card

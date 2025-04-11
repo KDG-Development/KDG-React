@@ -9,7 +9,7 @@ export interface NavTitleProps extends HTMLAttributes<HTMLLIElement> {
   subTitle:React.ReactNode
 }
 
-const NavTitle = forwardRef<HTMLLIElement, NavTitleProps>(
+export const NavTitle = forwardRef<HTMLLIElement, NavTitleProps>(
     ({ children, className, subTitle, ...rest }, ref) => {
       return (
         <li className={classNames(className)} {...rest} ref={ref}>
@@ -33,5 +33,3 @@ const NavTitle = forwardRef<HTMLLIElement, NavTitleProps>(
       )
     },
   )
-
-export default NavTitle

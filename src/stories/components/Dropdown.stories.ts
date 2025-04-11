@@ -1,6 +1,7 @@
 import type { Meta } from '@storybook/react';
-import { Dropdown, DropdownEnums } from '../../components';
 import { Ipsum, StoryDecorators } from '.././utils';
+import { DropdownEnums } from '../../components';
+import { Dropdown } from '../../components';
 
 export default {
   component: Dropdown,

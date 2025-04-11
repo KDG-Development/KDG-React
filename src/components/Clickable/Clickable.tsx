@@ -7,7 +7,7 @@ type ClickableProps = {
   className?:string
 }
 
-const Clickable = (props:React.PropsWithChildren<ClickableProps>) => (
+export const Clickable = (props:React.PropsWithChildren<ClickableProps>) => (
   <span
     className={props.className}
     onClick={e => handleOnClick(e, props.onClick)}
@@ -40,5 +40,3 @@ export const WrappedClickable = (props:React.PropsWithChildren<WrappedClickableP
     />
   )
 }
-
-export default Clickable

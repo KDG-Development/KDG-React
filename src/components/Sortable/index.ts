@@ -1,4 +1,1 @@
-export {
-  SortThreshold,
-  Sortable,
-} from './Sortable'
+export * from './Sortable'

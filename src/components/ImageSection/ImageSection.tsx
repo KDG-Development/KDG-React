@@ -6,7 +6,7 @@ type Props = {
   innerClassName?:string
 }
 
-const ImageSection = (props:React.PropsWithChildren<Props>) => {
+export const ImageSection = (props:React.PropsWithChildren<Props>) => {
 
   return (
     <div
@@ -27,5 +27,3 @@ const ImageSection = (props:React.PropsWithChildren<Props>) => {
     </div>
   )
 }
-
-export default ImageSection

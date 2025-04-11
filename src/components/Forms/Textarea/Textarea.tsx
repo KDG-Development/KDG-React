@@ -1,7 +1,8 @@
 import { CFormControlWrapper, CFormLabel, CFormTextarea} from '@coreui/react-pro'
 import React from 'react'
-import { Conditional, EntityConditional } from '../../Conditional'
 import { RequiredAsterisk } from '../_common'
+import { Conditional } from '../../Conditional/Conditional'
+import { EntityConditional } from '../../Conditional/Conditional'
 type Props = {
   value:string|null
   id?:string
@@ -14,7 +15,7 @@ type Props = {
   disabled?:boolean
   placeholder?:string
 }
-const Textarea = (props:Props) => {
+export const Textarea = (props:Props) => {
   return (
     <CFormControlWrapper>
       <EntityConditional
@@ -43,5 +44,3 @@ const Textarea = (props:Props) => {
     </CFormControlWrapper>
   )
 }
-
-export default Textarea

@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
-import Textarea from '../../components/Forms/Textarea';
+import { Textarea } from '../../components';
 
 export default {
   component: Textarea,

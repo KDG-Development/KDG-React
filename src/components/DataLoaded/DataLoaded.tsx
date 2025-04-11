@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import Loader from '../Loader/Loader'
+import { Loader } from '../Loader/Loader'
 import { Conditional } from '../Conditional/Conditional'
 
 type P<T> = {
@@ -9,7 +9,7 @@ type P<T> = {
   onNoData?:()=>React.ReactNode
 }
 
-const DataLoaded = <T extends {}>(props:P<T>) => {
+export const DataLoaded = <T extends {}>(props:P<T>) => {
 
   const [loading, setloading] = useState(false)
   const [data, setdata] = useState<T|null>(null)
@@ -43,5 +43,3 @@ const DataLoaded = <T extends {}>(props:P<T>) => {
       />
   )
 }
-
-export default DataLoaded

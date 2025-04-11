@@ -1,4 +1,1 @@
-export {
-  Sidebar,
-  SidebarEnums,
-} from './Sidebar'
+export * from './Sidebar'

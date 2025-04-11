@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import TextInput, { TextInputProps } from '../TextInput/TextInput'
+import { TextInput, TextInputProps } from '../TextInput/TextInput'
 import { composedBooleanValidatedString } from '../../../utils/Common';
 
 export type DecimalConfig = {
@@ -17,7 +17,7 @@ export type NumberInputProps = Omit<TextInputProps,"value"|"onChange"> & {
   max?:number
 } & DecimalConfig
 
-const NumberInput: React.FC<NumberInputProps> = (props) => {
+export const NumberInput: React.FC<NumberInputProps> = (props) => {
 
   const [inputValue, setInputValue] = useState<string>(props.value !== null ? props.value.toString() : '');
 
@@ -101,5 +101,3 @@ const NumberInput: React.FC<NumberInputProps> = (props) => {
     />
   );
 };
-
-export default NumberInput;

@@ -1,1 +1,1 @@
-export { CopyContent } from './CopyContent'
+export * from './CopyContent'

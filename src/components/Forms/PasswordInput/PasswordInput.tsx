@@ -1,7 +1,6 @@
 import React, { useState } from "react"
-import TextInput from "../TextInput"
-import Icon from "../../Icon"
-import { TextInputProps } from "../TextInput/TextInput"
+import { TextInput, TextInputProps } from "../TextInput/TextInput"
+import { Icon } from "../../Icon/Icon"
 import { cilLockLocked, cilLockUnlocked } from '@coreui/icons'
 
 

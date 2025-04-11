@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Clickable from '../Clickable'
-import { Conditional } from '../Conditional'
-import Icon from '../Icon'
+import {Clickable} from '../Clickable/Clickable'
+import { Conditional } from '../Conditional/Conditional'
+import {Icon} from '../Icon/Icon'
 import { cilCheck, cilCopy } from '@coreui/icons'
 
 type TCopyContentProps = {

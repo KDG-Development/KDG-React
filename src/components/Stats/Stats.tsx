@@ -12,7 +12,7 @@ type Props = {
   stats: Stats
   className?:string
 }
-const Stats = (props:Props) => {
+export const Stats = (props:Props) => {
   return (
     <div className={`d-flex flex-column ${props.className ? props.className : ''}`}>
       {
@@ -33,4 +33,3 @@ const Stats = (props:Props) => {
     </div>
   )
 }
-export default Stats

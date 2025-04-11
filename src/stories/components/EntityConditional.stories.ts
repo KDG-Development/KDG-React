@@ -1,6 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { EntityConditional } from '../../components';
-
+import {EntityConditional} from '../../components';
 export default {
   component: EntityConditional,
   title:'Components/Utilities/Entity Conditional',

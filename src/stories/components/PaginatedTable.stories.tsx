@@ -1,5 +1,5 @@
 import type { Meta } from '@storybook/react';
-import { PaginatedTable } from '../../components';
+import {PaginatedTable} from '../../components';
 import React, { useCallback, useEffect, useState } from 'react';
 import { usePagination } from '../../utils/Hooks/hooks';
 import { Ipsum } from '../utils';
