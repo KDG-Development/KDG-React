@@ -1,5 +1,5 @@
 import React from 'react'
-import { CFormControlWrapper, CFormSwitch } from "@coreui/react-pro"
+import { CFormControlWrapper } from "@coreui/react-pro"
 import { Conditional, EntityConditional } from '../../Conditional'
 import { RequiredAsterisk } from '../_common'
 
@@ -15,32 +15,33 @@ type Props = {
 const Toggle = (props:Props) => {
   return (
     <CFormControlWrapper>
-      <CFormSwitch
-        label={
-          <EntityConditional
-            entity={props.label}
-            render={label => (
-              <>
-                {label}
-                <Conditional
-                  condition={!!props.required}
-                  onTrue={() => <RequiredAsterisk/>}
-                />
-              </>
+      <div className={'form-check form-switch ' + (props.error ? 'is-invalid' : '')}>
+        <label className="form-check-label">
+        <input type="checkbox" className={"form-check-input " + (props.error ? 'is-invalid' : '')}
+          checked={props.value}
+          onChange={() => props.onChange(!props.value)}
+          disabled={props.disabled}
+        />
+        <EntityConditional
+          entity={props.label}
+          render={label => (
+          <>
+            {label}
+            <Conditional
+              condition={!!props.required}
+              onTrue={() => <RequiredAsterisk/>}
+            />
+          </>
+          )}
+        />
+        </label>
+        </div>
+        <EntityConditional
+            entity={props.error}
+            render={error => (
+            <div className='invalid-feedback'>{error}</div>
             )}
-          />
-        }
-        checked={props.value}
-        onChange={() => props.onChange(!props.value)}
-        invalid={!!props.error}
-        disabled={props.disabled}
-      />
-      <EntityConditional
-        entity={props.error}
-        render={error => (
-          <div className='invalid-feedback'>{error}</div>
-        )}
-      />
+        />
     </CFormControlWrapper>
   )
 }

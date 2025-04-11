@@ -21,6 +21,7 @@ type Sort<T> = {
 type Fields<T> = {
   [header:string]:{
     valueRender:(_:T) => React.ReactNode
+    getCellClassName?:(val:T,index:number)=>string
     hideHeader?:true
     sort?:Sort<T>
     header?:{
@@ -210,7 +211,9 @@ export const Table = <T extends {}>(props:TableProps<T>) => {
                     Object.values(props.fields).map((field,i) =>
                       <CTableDataCell
                         key={`${props.itemKey(item)}-${i}`}
-                        className={'table-max-width'}
+                        className={'table-max-width ' + (
+                          field.getCellClassName ? field.getCellClassName(item,i) : ''
+                        )}
                       >
                         { field.valueRender(item) }
                       </CTableDataCell>
