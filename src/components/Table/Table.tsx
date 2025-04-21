@@ -44,6 +44,7 @@ type TableProps<T> = {
     onExpandedRecordsChange:(_:React.Key[])=>void
     expandedValueRender:(_:T)=>React.ReactNode
     expandedClassName?:string
+    expandedRowClassName?:string
   }
   fields:Fields<T>
   bordered?:boolean
@@ -226,7 +227,7 @@ export const Table = <T extends {}>(props:TableProps<T>) => {
                   <Conditional
                     condition={exp.expandedRecords.includes(props.itemKey(item))}
                     onTrue={() => (
-                      <CTableRow>
+                      <CTableRow className={exp.expandedRowClassName}>
                         <CTableDataCell
                           colSpan={ Object.values(props.fields).length + 1}
                           className={`table-max-width ${exp.expandedClassName || ''}`}
