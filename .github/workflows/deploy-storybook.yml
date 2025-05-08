@@ -3,7 +3,7 @@ name: Deploy Storybook to Azure Static Web Apps
 on:
   push:
     branches:
-      - feature/deployment
+      - main
   workflow_dispatch:
 
 jobs:
