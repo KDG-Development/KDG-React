@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter,RouteObject,RouterProvider, useRouteError, createHashRouter } from "react-router-dom"
+import { createBrowserRouter,RouteObject,RouterProvider, useRouteError, createHashRouter, useParams } from "react-router-dom"
 
 export enum RouteType {
   PUBLIC="PUBLIC",
@@ -108,4 +108,35 @@ export const composeAppHashRoutingProvider = (props:ComposedHashRouterProps) => 
   return (
     <RouterProvider router={router}/>
   )
+}
+
+type ExtractRouteParams<Path extends string> =
+  Path extends `${string}:${infer Param}/${infer Rest}`
+    ? Param | ExtractRouteParams<`/${Rest}`>
+    : Path extends `${string}:${infer Param}`
+      ? Param
+      : never
+
+type ParamsObject<Path extends string> =
+  ExtractRouteParams<Path> extends never
+    ? {}
+    : { [K in ExtractRouteParams<Path>]: string }
+
+export const composeParameterizedRoutePath = <Path extends string>(
+  path: Path,
+  parameters: ParamsObject<Path>
+): string =>
+  path.replace(/:(\w+)/g, (match, p1) => {
+    // @ts-expect-error: wont know at runtime, but compile-time is enforced
+    return parameters[p1] ?? match;
+  })
+
+/**
+ * useTypedRouteParams - a hook to get typed route parameters from useParams, based on the path string
+ * @example
+ *   const params = useTypedRouteParams<'/home-visit/:clientId'>();
+ *   // params: { clientId: string }
+ */
+export const useTypedRouteParams = <Path extends string>(): ParamsObject<Path> => {
+  return useParams() as ParamsObject<Path>;
 }

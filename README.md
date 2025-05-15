@@ -24,6 +24,12 @@
 3. Update applicable component stories at `/src/stories`
 4. Create a PR at [KDG-React](https://github.com/KDG-Development/KDG-React)
 
+## Running with Docker
+
+1. To start Storybook using Docker, run: `docker-compose up`
+2. Access the Storybook interface at `http://localhost:6006`
+3. Changes to your component files will automatically be reflected in the Storybook interface
+
 ### Additional Notes
 
 - Internal onclick events should be wrapped with the `handleOnClick` function located at `/src/utils/Common` to ensure event bubbling and propagation is standardized (WrappedClickable `/src/components/Clickable` can be substituted when a mouse event is unavailable)

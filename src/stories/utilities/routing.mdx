@@ -1,15 +1,47 @@
-import { Meta } from '@storybook/blocks';
 
-<Meta title="Utilities/Routing" />
 
-# DateTime utilities
+# Routing utilities
 
 ## `composeAppRoutingProvider`
 Used to compose a BrowserRouter for wrapping the React App
+
 ## `composeAppHashRoutingProvider`
-Used to compose a HasRouter for wrapping the React App
+Used to compose a HashRouter for wrapping the React App
+
 ## `useRouterErrors`
 Hook for parsing errors from routes during render
+
+## `composeParameterizedRoutePath`
+A type-safe utility function for building route paths with parameters.
+
+```typescript
+
+enum RoutePath {
+  UserProfile = '/user/:userId/profile/:section',
+}
+
+const path = composeParameterizedRoutePath<RoutePath.UserProfile>(
+  RoutePath.UserProfile,
+  { userId: '123', section: 'settings' }
+);
+
+// Result: '/user/123/profile/settings'
+```
+
+## `useTypedRouteParams`
+A type-safe wrapper around React Router's `useParams` hook that provides strong typing for route parameters.
+
+```typescript
+// When used in a component rendered for a route matching this path pattern:
+
+enum RoutePath {
+  UserProfile = '/user/:userId/profile/:section',
+}
+
+const { userId, section } = useTypedRouteParams<RoutePath.UserProfile>();
+
+// Type of params: { userId: string; section: string }
+```
 
 
 
