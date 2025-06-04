@@ -6,3 +6,5 @@ pkg
 
 # storybook build
 storybook-static
+
+*.cursor.todo.md

@@ -6,14 +6,18 @@ import { EntityConditional } from '..'
 import { Loader } from '..'
 import { cilCheckCircle } from '@coreui/icons'
 
+type UnFocusableAsyncSuccessConfig = {
+  duration?: number
+  content?: ReactNode
+}
+
 type UnFocusableAsyncProps = {
   children: ReactNode
   onFocusOut: () => Promise<void>
   loading: boolean
   wrapperClassName?: string
   overlayClassName?: string
-  successDuration?: number
-  successContent?: ReactNode
+  successConfig?: UnFocusableAsyncSuccessConfig
 }
 
 export const UnFocusableAsync = (props: UnFocusableAsyncProps) => {
@@ -22,11 +26,12 @@ export const UnFocusableAsync = (props: UnFocusableAsyncProps) => {
   const handleFocusOut = async () => {
     try {
       await props.onFocusOut()
-      setShowSuccess(true)
-      
-      setTimeout(() => {
-        setShowSuccess(false)
-      }, props.successDuration || 500)
+      if (props.successConfig) {
+        setShowSuccess(true)
+        setTimeout(() => {
+          setShowSuccess(false)
+        }, props.successConfig.duration || 500)
+      }
     } catch (error) {
       console.error('Error in onFocusOut callback:', error)
       setShowSuccess(false)
@@ -56,10 +61,10 @@ export const UnFocusableAsync = (props: UnFocusableAsyncProps) => {
       </UnFocusable>
       
       {props.loading && renderOverlay(<Loader />)}
-      {showSuccess && !props.loading && renderOverlay(
+      {props.successConfig && showSuccess && !props.loading && renderOverlay(
         <span className='text-success font-size-2xl'>
           <EntityConditional
-            entity={props.successContent}
+            entity={props.successConfig.content}
             render={x => x}
             fallback={() =>
               <Icon size='5xl' icon={cilCheckCircle}/>
