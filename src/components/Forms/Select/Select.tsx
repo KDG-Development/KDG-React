@@ -140,6 +140,9 @@ const BaseSelect = <T extends {}>(
       config: {
         [ESelectConfig.Single]: config => {
           config.value.onChange(x)
+          if (container.current) {
+            container.current.focus()
+          }
           setShowInput(false)
         },
         [ESelectConfig.Multi]: config => {
@@ -395,6 +398,7 @@ const BaseSelect = <T extends {}>(
       <div
         className="custom-input-w-loader"
         ref={container}
+        tabIndex={-1}
       >
         <div
           className={composedBooleanValidatedString([
