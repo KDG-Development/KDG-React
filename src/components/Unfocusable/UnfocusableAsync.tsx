@@ -54,7 +54,6 @@ export const UnFocusableAsync = (props: UnFocusableAsyncProps) => {
   return (
     <div className={composedBooleanValidatedString([
       [props.wrapperClassName || '', !!props.wrapperClassName],
-      [' d-flex position-relative', true]
     ])}>
       <UnFocusable onFocusOut={handleFocusOut}>
         {props.children}
