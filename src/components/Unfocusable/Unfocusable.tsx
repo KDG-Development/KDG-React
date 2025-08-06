@@ -1,17 +1,43 @@
 import React,{ useRef, useEffect, ReactNode, useState } from 'react'
+import { composedBooleanValidatedString } from '../../utils/Common'
+import { EntityConditional } from '../Conditional'
 
 type UnFocusableProps = {
   children: ReactNode
   onFocusOut: () => void
+  disabled?: boolean | {
+    overlayClassName?: string
+    overlayContent: ReactNode
+  }
 }
 
 export const UnFocusable = (props: UnFocusableProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [hasFocus, setHasFocus] = useState(false)
 
+  const renderOverlay = (content?: ReactNode, overlayClassName?: string) => (
+    <div
+      style={{
+        zIndex: 101
+      }}
+      className={
+        composedBooleanValidatedString([
+          ['top-0 bg-white d-flex h-100 justify-content-center align-items-center opacity-75 position-absolute w-100', true],
+          [overlayClassName || '', !!overlayClassName]
+        ])
+      }
+    >
+      {content}
+    </div>
+  )
+
   useEffect(() => {
     const handleFocusIn = (event: FocusEvent) => {
-      if (containerRef.current && containerRef.current.contains(event.target as Node)) {
+      if (
+        !props.disabled &&
+        containerRef.current && 
+        containerRef.current.contains(event.target as Node)
+      ) {
         setHasFocus(true)
       }
     }
@@ -19,6 +45,7 @@ export const UnFocusable = (props: UnFocusableProps) => {
     const handleFocusOut = (event: FocusEvent) => {
       // Only trigger if we currently have focus and are moving to something outside
       if (
+        !props.disabled &&
         hasFocus && 
         containerRef.current && 
         !containerRef.current.contains(event.relatedTarget as Node)
@@ -35,10 +62,17 @@ export const UnFocusable = (props: UnFocusableProps) => {
       document.removeEventListener('focusin', handleFocusIn)
       document.removeEventListener('focusout', handleFocusOut)
     }
-  }, [hasFocus, props.onFocusOut])
+  }, [hasFocus, props.onFocusOut, props.disabled])
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className='position-relative'>
+      <EntityConditional
+        entity={props.disabled}
+        render={x => renderOverlay(
+          typeof x === 'object' ? x.overlayContent : undefined,
+          typeof x === 'object' ? x.overlayClassName : undefined
+        )}
+      />
       {props.children}
     </div>
   )
