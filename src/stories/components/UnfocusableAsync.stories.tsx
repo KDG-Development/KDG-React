@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { UnFocusableAsync } from '../../components/Unfocusable'
 import { Meta } from '@storybook/react';
-import logo from '.././assets/kdg-logo.png'
-import { Image } from '../../components';
 
 export default {
   component: UnFocusableAsync,
@@ -22,11 +20,6 @@ export const Component = () => {
   const [focusOutCount2, setFocusOutCount2] = useState(0)
   const [formData2, setFormData2] = useState({ title: '', description: '' })
 
-  // Third component state (no success overlay)
-  const [loading3, setLoading3] = useState(false)
-  const [focusOutCount3, setFocusOutCount3] = useState(0)
-  const [formData3, setFormData3] = useState({ field: '' })
-
   const handleFormChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData1({
       ...formData1,
@@ -39,10 +32,6 @@ export const Component = () => {
       ...formData2,
       [e.target.name]: e.target.value
     })
-  }
-
-  const handleFormChange3 = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData3({ ...formData3, [e.target.name]: e.target.value })
   }
 
   const handleFocusOut1 = async () => {
@@ -67,17 +56,6 @@ export const Component = () => {
     })
   }
 
-  const handleFocusOut3 = async () => {
-    setLoading3(true)
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        setLoading3(false)
-        setFocusOutCount3(prev => prev + 1)
-        resolve()
-      }, 1500)
-    })
-  }
-
   return (
     <div className="p-4">
       <h4>UnFocusableAsync: Success Overlay Configurations</h4>
@@ -90,7 +68,6 @@ export const Component = () => {
             onFocusOut={handleFocusOut1}
             loading={loading1}
             wrapperClassName="border border-primary"
-            successConfig={{ duration: 1000 }}
           >
             <div className="p-4" tabIndex={0}>
               <h5>User Information Form</h5>
@@ -130,7 +107,6 @@ export const Component = () => {
             onFocusOut={handleFocusOut2}
             loading={loading2}
             wrapperClassName="border border-primary"
-            successConfig={{ content: <Image src={logo}/> }}
           >
             <div className="p-4" tabIndex={0}>
               <h5>Content Editor</h5>
@@ -157,33 +133,6 @@ export const Component = () => {
                     onChange={handleFormChange2}
                     rows={3}
                     placeholder="Enter content description" 
-                  />
-                </div>
-              </form>
-            </div>
-          </UnFocusableAsync>
-        </div>
-        {/* No success overlay */}
-        <div style={{ width: '350px' }}>
-          <p>No success overlay saves: {focusOutCount3}</p>
-          <UnFocusableAsync 
-            onFocusOut={handleFocusOut3}
-            loading={loading3}
-            wrapperClassName="border border-secondary"
-          >
-            <div className="p-4" tabIndex={0}>
-              <h5>Form Without Success Overlay</h5>
-              <form className="d-flex flex-column gap-3">
-                <div className="form-group">
-                  <label htmlFor="field">Field</label>
-                  <input 
-                    type="text" 
-                    className="form-control" 
-                    id="field" 
-                    name="field"
-                    value={formData3.field}
-                    onChange={handleFormChange3}
-                    placeholder="Enter something" 
                   />
                 </div>
               </form>
