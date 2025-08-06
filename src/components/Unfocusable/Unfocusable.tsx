@@ -16,7 +16,10 @@ export const UnFocusable = (props: UnFocusableProps) => {
   const [hasFocus, setHasFocus] = useState(false)
 
   const renderOverlay = (content?: ReactNode, overlayClassName?: string) => (
-    <div 
+    <div
+      style={{
+        zIndex: 101
+      }}
       className={
         composedBooleanValidatedString([
           ['top-0 bg-white d-flex h-100 justify-content-center align-items-center opacity-75 position-absolute w-100', true],
