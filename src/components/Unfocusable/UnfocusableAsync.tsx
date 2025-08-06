@@ -36,7 +36,7 @@ export const UnFocusableAsync = (props: UnFocusableAsyncProps) => {
           props.loading ? {
             overlayContent: <Loader />,
             overlayClassName: 'bg-white'
-          } : props.disabled ? undefined : undefined
+          } : props.disabled
         }
       >
         {props.children}
