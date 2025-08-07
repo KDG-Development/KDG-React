@@ -7,6 +7,7 @@ type Props = {
   trigger:React.ReactNode
   content:(cancel:()=>void) => React.ReactNode
   header?:React.ReactNode
+  disabled?:boolean
 }
 
 export const ConfirmModal = (props:Props) => {
@@ -14,7 +15,7 @@ export const ConfirmModal = (props:Props) => {
   return (
     <>
       <Clickable
-        onClick={() => setshow(true)}
+        onClick={() => !props.disabled && setshow(true)}
       >
         {props.trigger}
       </Clickable>

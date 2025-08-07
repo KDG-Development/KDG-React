@@ -43,6 +43,7 @@ export const ConfirmationDialog = ({
   <ConfirmModal
     trigger={trigger}
     header={header}
+    disabled={disabled}
     content={(cancel) => (
       <div>
         <span className={messageClassName}>{message}</span>
