@@ -11,6 +11,7 @@ export default {
     header: 'Confirm Action',
     message: Ipsum.paragraph(),
     onConfirm: () => console.log('Confirmed'),
+    disabled: true,
   }
 } satisfies Meta<typeof ConfirmationDialog>;
 
