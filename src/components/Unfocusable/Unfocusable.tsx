@@ -18,11 +18,12 @@ export const UnFocusable = (props: UnFocusableProps) => {
   const renderOverlay = (content?: ReactNode, overlayClassName?: string) => (
     <div
       style={{
-        zIndex: 101
+        zIndex: 101,
+        cursor: 'not-allowed'
       }}
       className={
         composedBooleanValidatedString([
-          ['top-0 bg-white d-flex h-100 justify-content-center align-items-center opacity-75 position-absolute w-100', true],
+          ['top-0 bg-light d-flex h-100 justify-content-center align-items-center opacity-50 position-absolute w-100', true],
           [overlayClassName || '', !!overlayClassName]
         ])
       }
