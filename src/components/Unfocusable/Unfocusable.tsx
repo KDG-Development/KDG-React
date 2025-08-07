@@ -23,7 +23,7 @@ export const UnFocusable = (props: UnFocusableProps) => {
       }}
       className={
         composedBooleanValidatedString([
-          ['top-0 bg-light d-flex h-100 justify-content-center align-items-center opacity-50 position-absolute w-100', true],
+          ['kdg-unfocusable-overlay top-0 bg-light d-flex h-100 justify-content-center align-items-center opacity-50 position-absolute w-100', true],
           [overlayClassName || '', !!overlayClassName]
         ])
       }
