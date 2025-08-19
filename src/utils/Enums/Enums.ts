@@ -13,4 +13,7 @@ export namespace Enums {
     Dark="dark",
     Light="light",
   }
+  export enum KeyboardKey {
+    Escape="Escape",
+  }
 }

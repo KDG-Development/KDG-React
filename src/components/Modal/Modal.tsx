@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom';
 import { composedBooleanValidatedString } from '../../utils/Common/common';
 import { Conditional } from '../Conditional/Conditional';
+import { Enums } from '../../utils/Enums';
 
 type Props = {
   onClose:()=>void
@@ -10,6 +11,7 @@ type Props = {
   footer?:()=>React.ReactNode
   size?:'sm'|'lg'|'xl'
   className?:string
+  disableCloseOnEscape?:boolean
 }
 
 export const Modal = (props:Props) => {
@@ -26,6 +28,23 @@ export const Modal = (props:Props) => {
       }
     }
   },[])
+
+  useEffect(() => {
+    if (props.disableCloseOnEscape) {
+      return
+    }
+
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === Enums.KeyboardKey.Escape) {
+        props.onClose()
+      }
+    }
+
+    document.addEventListener('keydown', handleEscapeKey)
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [props.onClose, props.disableCloseOnEscape])
 
   const composedClasses = () =>
     composedBooleanValidatedString([
