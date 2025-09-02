@@ -253,6 +253,7 @@ type PaginatedTableProps<T> = TableProps<T> & {
   pagination:TPagination
   pageOptions:TPageOptions
   onChangePagination:(_:TPagination)=>void
+  tableWrapperClassName?:string
 }
 export const PaginatedTable = <T extends {}>(props:PaginatedTableProps<T>) => {
 
@@ -262,7 +263,9 @@ export const PaginatedTable = <T extends {}>(props:PaginatedTableProps<T>) => {
         condition={props.loading}
         onTrue={() => <Loader/>}
         onFalse={() => (
-          <Table {...props} />
+          <div className={props.tableWrapperClassName}>
+            <Table {...props} />
+          </div>
         )}
       />
       <Pagination
